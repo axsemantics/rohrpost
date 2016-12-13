@@ -45,6 +45,48 @@ Or add this line to your `requirements.txt`::
     https://github.com/user/repository/archive/branch.zip
 
 
+Routing
+#######
+
+Once you have installed `rohrpost` that, you'll need to add the main `rohrpost` handler to your
+`routing.py`. You can find details on this in Channels' `routing documentation`_.::
+
+    from channels import route
+    from rohrpost.main import handle_rohrpost_message
+
+    channel_routing = [
+        route('websocket.receive', handle_rohrpost_message, path=r'/rohrpost/$'),
+    ]
+
+Handlers
+########
+
+`rohrpost` provides a set of helper methods for writing your own handlers. Please read the
+developer documentation for further information. Most notably, you'll need the `rohrpost_handler`
+decorator, and probably at least one of `send_message`, `send_success`, and `send_error`.
+This is how the included `ping` handler works::
+
+
+    from rohrpost.message import send_message
+    from rohrpost.registry import rohrpost_handler
+
+    @rohrpost_handler('ping')
+    def handle_ping(message, request):
+        if 'data' in request:
+            send_message(
+                message=message,
+                message_id=request['id'],
+                handler='pong',
+                data=request['data'],
+            )
+        else:
+            send_message(
+                message=message,
+                message_id=request['id'],
+                handler='pong',
+            )
+
+
 Development
 -----------
 
@@ -59,3 +101,4 @@ For development you'll need to have the test environment installed. This is rath
 .. _Daphne: https://github.com/django/daphne/
 .. _Django: https://www.djangoproject.com/
 .. _rohrpost-js: https://github.com/axsemantics/rohrpost-js
+.. _routing documentation: http://channels.readthedocs.io/en/latest/routing.html
