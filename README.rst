@@ -30,6 +30,30 @@ success or on error.
 `rohrpost` natively only provides the `ping` handler, please see Handlers_ below for a guide on
 how to write your own handlers.
 
+Usage
+-----
+
+Installation
+############
+
+From the command line::
+
+    pip install https://github.com/user/repository/archive/branch.zip
+
+Or add this line to your `requirements.txt`::
+
+    https://github.com/user/repository/archive/branch.zip
+
+
+Development
+-----------
+
+For development you'll need to have the test environment installed. This is rather large since
+`rohrpost` is meant to be used in conjunction with Channels_, Daphne_, Django_ and so on.::
+
+    pip install -r requirements/dev.txt
+
+
 .. _ASGI: https://channels.readthedocs.io/en/latest/asgi.html
 .. _Channels: https://github.com/django/channels
 .. _Daphne: https://github.com/django/daphne/
