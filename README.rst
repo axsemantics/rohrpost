@@ -14,10 +14,12 @@ Protocol
 --------
 
 The `rohrpost` protocol is very simple. The client may send messages containing an `id` (integer),
-a `type` (string), and an optional data field (any JSON type)::
+a `type` (string), and an optional data field (any JSON type):
+
+.. code:: JSON
 
     {
-        "id": 123
+        "id": 123,
         "type": "ping",
         "data": "something",
     }
@@ -49,7 +51,9 @@ Routing
 #######
 
 Once you have installed `rohrpost` that, you'll need to add the main `rohrpost` handler to your
-`routing.py`. You can find details on this in Channels' `routing documentation`_.::
+`routing.py`. You can find details on this in Channels' `routing documentation`_.
+
+.. code:: Python
 
     from channels import route
     from rohrpost.main import handle_rohrpost_message
@@ -64,8 +68,9 @@ Handlers
 `rohrpost` provides a set of helper methods for writing your own handlers. Please read the
 developer documentation for further information. Most notably, you'll need the `rohrpost_handler`
 decorator, and probably at least one of `send_message`, `send_success`, and `send_error`.
-This is how the included `ping` handler works::
+This is how the included `ping` handler works:
 
+.. code:: Python
 
     from rohrpost.message import send_message
     from rohrpost.registry import rohrpost_handler
@@ -91,7 +96,7 @@ Development
 -----------
 
 For development you'll need to have the test environment installed. This is rather large since
-`rohrpost` is meant to be used in conjunction with Channels_, Daphne_, Django_ and so on.::
+`rohrpost` is meant to be used in conjunction with Channels_, Daphne_, Django_ and so on. ::
 
     pip install -r requirements/dev.txt
 
