@@ -100,8 +100,11 @@ For development you'll need to have the test environment installed. This is rath
 
     pip install -r requirements/dev.txt
 
+Run tests and style checks in this directory::
 
-Run tests by calling `py.test` in this directory.
+    py.test
+    isort -rc .
+    pylama
 
 
 .. _ASGI: https://channels.readthedocs.io/en/latest/asgi.html
