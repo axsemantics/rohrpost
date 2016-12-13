@@ -101,6 +101,9 @@ For development you'll need to have the test environment installed. This is rath
     pip install -r requirements/dev.txt
 
 
+Run tests by calling `py.test` in this directory.
+
+
 .. _ASGI: https://channels.readthedocs.io/en/latest/asgi.html
 .. _Channels: https://github.com/django/channels
 .. _Daphne: https://github.com/django/daphne/
