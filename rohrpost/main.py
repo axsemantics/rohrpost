@@ -5,7 +5,6 @@ from . import handlers  # noqa
 from .message import send_error
 from .registry import HANDLERS
 
-
 REQUIRED_FIELDS = ['type', 'id']
 
 
