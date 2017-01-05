@@ -19,7 +19,7 @@ def test_send_error_with_additional_data(message):
     assert data[0]['id'] == 1
     assert data[0]['type'] == 'some_handler'
     assert data[0]['error'] == 'error_message'
-    assert data[0]['some_field'] == 'additional_info'
+    assert data[0]['data']['some_field'] == 'additional_info'
 
 
 def test_send_error_without_id(message):
@@ -38,7 +38,7 @@ def test_send_error_without_id_with_additional_data(message):
     assert 'id' not in data[0]
     assert data[0]['type'] == 'some_handler'
     assert data[0]['error'] == 'error_message'
-    assert data[0]['some_field'] == 'additional_info'
+    assert data[0]['data']['some_field'] == 'additional_info'
 
 
 def test_send_error_without_id_and_type(message):
@@ -48,7 +48,7 @@ def test_send_error_without_id_and_type(message):
     assert 'id' not in data[0]
     assert 'type' not in data[0]
     assert data[0]['error'] == 'error_message'
-    assert data[0]['some_field'] == 'additional_info'
+    assert data[0]['data']['some_field'] == 'additional_info'
 
 
 def test_send_error_without_anything(message):
@@ -66,7 +66,6 @@ def test_send_success(message):
     assert len(data) == 1
     assert data[0]['id'] == 1
     assert data[0]['type'] == 'some_handler'
-    assert data[0]['success'] is True
 
 
 def test_send_success_with_additional_data(message):
@@ -75,8 +74,8 @@ def test_send_success_with_additional_data(message):
     assert len(data) == 1
     assert data[0]['id'] == 1
     assert data[0]['type'] == 'some_handler'
-    assert data[0]['success'] is True
-    assert data[0]['some_field'] == 'additional_info'
+    assert data[0]['data']['some_field'] == 'additional_info'
+    assert 'some_field' not in data[0]
 
 
 def test_send_success_without_id(message):
@@ -111,7 +110,7 @@ def test_send_message_with_additional_data(message):
     assert len(data) == 1
     assert data[0]['id'] == 1
     assert data[0]['type'] == 'some_handler'
-    assert data[0]['some_field'] == 'additional_info'
+    assert data[0]['data']['some_field'] == 'additional_info'
 
 
 def test_send_message_without_id(message):
@@ -128,7 +127,7 @@ def test_send_message_without_id_with_additional_data(message):
     assert len(data) == 1
     assert 'id' not in data[0]
     assert data[0]['type'] == 'some_handler'
-    assert data[0]['some_field'] == 'additional_info'
+    assert data[0]['data']['some_field'] == 'additional_info'
 
 
 def test_send_message_without_id_and_type(message):
@@ -137,7 +136,7 @@ def test_send_message_without_id_and_type(message):
     assert len(data) == 1
     assert 'id' not in data[0]
     assert 'type' not in data[0]
-    assert data[0]['some_field'] == 'additional_info'
+    assert data[0]['data']['some_field'] == 'additional_info'
 
 
 def test_send_message_without_anything(message):
