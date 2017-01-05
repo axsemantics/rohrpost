@@ -17,6 +17,7 @@ class PushNotificationOnChangeModelMixin:
         "type": "subscription-update",
         "data": {
             "type": <create|update|delete>,
+            "group": <group-name>,
             "object": <serialized object if object.serializer_class is set, else
                        {"id": <object.id>}>,
             <additional data from object.get_push_notification_data()>
@@ -47,6 +48,7 @@ class PushNotificationOnChangeModelMixin:
         group_name = self._get_group_name()
         message = self._get_push_data()
         message['type'] = message_type
+        message['group'] = group_name
         Group(group_name).send({
             'text': json.dumps(message)
         })
