@@ -19,7 +19,6 @@ def send_message(message, message_id, handler, close=False, error=None, **additi
     if additional_data:
         content['data'] = additional_data
 
-    content.update(**additional_data)
     if not content:
         raise Exception('Cannot send an empty message.')
     _send_message(message, content, close=close)
