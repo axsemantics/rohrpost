@@ -26,8 +26,8 @@ a `type` (string), and an optional data field (any JSON type):
 
 The server will (if the mandatory fields have been sent) try to give the message to the handler
 responsible for that type. The handler should respond with a message containing the same `id` and
-`type`. Its `data` object should contain `{"success": true}` or `"{"error": <some error>}"` on
-success or on error.
+`type`. Its `data` object should contain {"error": <some error>}"` on errors as a top-level field.
+Additional data may be provided via the data field as per usual.
 
 `rohrpost` natively only provides the `ping` handler, please see Handlers_ below for a guide on
 how to write your own handlers.
