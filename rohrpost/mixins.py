@@ -1,5 +1,11 @@
 import json
 
+try:
+    from channels import Group
+except:
+    Group = None
+    print('Channels is not installed, running in test mode!')
+
 
 class PushNotificationOnChangeModelMixin:
     """
@@ -44,7 +50,6 @@ class PushNotificationOnChangeModelMixin:
         return obj_data
 
     def _send_notify(self, message_type):
-        from channels import Group
         group_name = self._get_group_name()
         message = self._get_push_data()
         message['type'] = message_type
