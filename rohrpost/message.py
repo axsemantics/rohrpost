@@ -1,4 +1,5 @@
 import json
+import random
 
 
 def _send_message(message, content: dict, close: bool):
@@ -8,16 +9,24 @@ def _send_message(message, content: dict, close: bool):
     })
 
 
-def send_message(message, message_id, handler, close=False, error=None, **additional_data):
+def build_message(handler, message_id=None, error=None, generate_id=False, **additional_data):
     content = dict()
     if message_id:
         content['id'] = message_id
+    elif generate_id:
+        content['id'] = random.randint(a=1, b=1000)
+
     if handler:
         content['type'] = handler
     if error:
         content['error'] = error
     if additional_data:
         content['data'] = additional_data
+    return content
+
+
+def send_message(message, message_id, handler, close=False, error=None, **additional_data):
+    content = build_message(handler=handler, message_id=message_id, error=error, **additional_data)
 
     if not content:
         raise Exception('Cannot send an empty message.')
