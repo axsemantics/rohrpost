@@ -127,6 +127,7 @@ def test_with_additional_data(obj_with_data, monkeypatch):
     assert LOGGED_DATA['modelwithdata-1'][-1]['type'] == 'subscription-update'
     assert LOGGED_DATA['modelwithdata-1'][-1]['data']['id'] == 1
     assert LOGGED_DATA['modelwithdata-1'][-1]['data']['type'] == 'create'
+    assert LOGGED_DATA['modelwithdata-1'][-1]['data']['extra_name'] == 'test object name'
 
     # update
     obj_with_data.save()
@@ -134,6 +135,7 @@ def test_with_additional_data(obj_with_data, monkeypatch):
     assert LOGGED_DATA['modelwithdata-1'][-1]['type'] == 'subscription-update'
     assert LOGGED_DATA['modelwithdata-1'][-1]['data']['id'] == 1
     assert LOGGED_DATA['modelwithdata-1'][-1]['data']['type'] == 'update'
+    assert LOGGED_DATA['modelwithdata-1'][-1]['data']['extra_name'] == 'test object name'
 
     # delete
     obj_with_data.delete()
@@ -141,6 +143,7 @@ def test_with_additional_data(obj_with_data, monkeypatch):
     assert LOGGED_DATA['modelwithdata-1'][-1]['type'] == 'subscription-update'
     assert LOGGED_DATA['modelwithdata-1'][-1]['data']['id'] == 1
     assert LOGGED_DATA['modelwithdata-1'][-1]['data']['type'] == 'delete'
+    assert LOGGED_DATA['modelwithdata-1'][-1]['data']['extra_name'] == 'test object name'
     LOGGED_DATA['modelwithdata-1'] = []
 
 
@@ -153,6 +156,7 @@ def test_with_serializer(obj_with_serializer, monkeypatch):
     assert len(LOGGED_DATA['modelwithserializer-1']) == 1
     assert LOGGED_DATA['modelwithserializer-1'][-1]['type'] == 'subscription-update'
     assert LOGGED_DATA['modelwithserializer-1'][-1]['data']['serialized_id'] == 1
+    assert LOGGED_DATA['modelwithserializer-1'][-1]['data']['serialized_name'] == 'test object name'
     assert LOGGED_DATA['modelwithserializer-1'][-1]['data']['type'] == 'create'
 
     # update
@@ -160,6 +164,7 @@ def test_with_serializer(obj_with_serializer, monkeypatch):
     assert len(LOGGED_DATA['modelwithserializer-1']) == 2
     assert LOGGED_DATA['modelwithserializer-1'][-1]['type'] == 'subscription-update'
     assert LOGGED_DATA['modelwithserializer-1'][-1]['data']['serialized_id'] == 1
+    assert LOGGED_DATA['modelwithserializer-1'][-1]['data']['serialized_name'] == 'test object name'
     assert LOGGED_DATA['modelwithserializer-1'][-1]['data']['type'] == 'update'
 
     # delete
@@ -167,6 +172,7 @@ def test_with_serializer(obj_with_serializer, monkeypatch):
     assert len(LOGGED_DATA['modelwithserializer-1']) == 3
     assert LOGGED_DATA['modelwithserializer-1'][-1]['type'] == 'subscription-update'
     assert LOGGED_DATA['modelwithserializer-1'][-1]['data']['serialized_id'] == 1
+    assert LOGGED_DATA['modelwithserializer-1'][-1]['data']['serialized_name'] == 'test object name'
     assert LOGGED_DATA['modelwithserializer-1'][-1]['data']['type'] == 'delete'
     LOGGED_DATA['modelwithserializer-1'] = []
 
@@ -179,19 +185,25 @@ def test_with_serializer_and_data(obj_with_serializer_and_data, monkeypatch):
     assert len(LOGGED_DATA['modelwithserializeranddata-1']) == 1
     assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['type'] == 'subscription-update'
     assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['serialized_id'] == 1
+    assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['serialized_name'] == 'test object name'
     assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['type'] == 'create'
+    assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['extra_name'] == 'test object name'
 
     # update
     obj_with_serializer_and_data.save()
     assert len(LOGGED_DATA['modelwithserializeranddata-1']) == 2
     assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['type'] == 'subscription-update'
     assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['serialized_id'] == 1
+    assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['serialized_name'] == 'test object name'
     assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['type'] == 'update'
+    assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['extra_name'] == 'test object name'
 
     # delete
     obj_with_serializer_and_data.delete()
     assert len(LOGGED_DATA['modelwithserializeranddata-1']) == 3
     assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['type'] == 'subscription-update'
     assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['serialized_id'] == 1
+    assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['serialized_name'] == 'test object name'
     assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['type'] == 'delete'
+    assert LOGGED_DATA['modelwithserializeranddata-1'][-1]['data']['extra_name'] == 'test object name'
     LOGGED_DATA['modelwithserializeranddata-1'] = []
