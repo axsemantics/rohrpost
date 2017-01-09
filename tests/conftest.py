@@ -48,6 +48,18 @@ class PlainExampleModel(PushNotificationOnChangeModelMixin, MockModel):
         super().delete(*args, **kwargs)
 
 
+class ExampleSerializer:
+    def __init__(self, obj):
+        self.obj = obj
+
+    @property
+    def data(self):
+        return {
+            'serialized_id': self.obj.pk,
+            'serialized_name': self.obj.name,
+        }
+
+
 class ModelWithAttrMixin:
     group_name = 'attribute-example-{pk}'
 
@@ -63,6 +75,10 @@ class ModelWithDataMixin:
             'extra_name': self.name,
             'extra_name_backwards': self.name[::-1],
         }
+
+
+class ModelWithSerializerMixin:
+    serializer_class = ExampleSerializer
 
 
 @pytest.fixture
@@ -92,7 +108,21 @@ def obj_with_method_and_attr():
 
 
 @pytest.fixture
+def obj_with_serializer():
+    class ModelWithSerializer(ModelWithSerializerMixin, PlainExampleModel):
+        pass
+    return ModelWithSerializer()
+
+
+@pytest.fixture
 def obj_with_data():
     class ModelWithData(ModelWithDataMixin, PlainExampleModel):
         pass
     return ModelWithData()
+
+
+@pytest.fixture
+def obj_with_serializer_and_data():
+    class ModelWithSerializerAndData(ModelWithSerializerMixin, ModelWithDataMixin, PlainExampleModel):
+        pass
+    return ModelWithSerializerAndData()
