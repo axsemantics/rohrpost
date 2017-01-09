@@ -6,6 +6,8 @@ except:
     Group = None
     print('Channels is not installed, running in test mode!')
 
+from .message import build_message
+
 
 class PushNotificationOnChangeModelMixin:
     """
@@ -51,11 +53,15 @@ class PushNotificationOnChangeModelMixin:
 
     def _send_notify(self, message_type):
         group_name = self._get_group_name()
-        message = self._get_push_data()
-        message['type'] = message_type
-        message['group'] = group_name
+        message_data = self._get_push_data()
+        message_data['type'] = message_type
+        message_data['group'] = group_name
         Group(group_name).send({
-            'text': json.dumps(message)
+            'text': json.dumps(build_message(
+                generate_id=True,
+                handler='subscription-update',
+                **message_data,
+            ))
         })
 
     def save(self, *args, **kwargs):
