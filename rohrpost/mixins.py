@@ -28,7 +28,7 @@ class PushNotificationOnChangeModelMixin:
             "group": <group-name>,
             "object": <serialized object if object.serializer_class is set, else
                        {"id": <object.id>}>, "id" being a guaranteed key
-            <additional data from object.get_push_notification_data()>
+                      plus the output of <additional data from object.get_push_notification_data()>
         }
     }
     """
