@@ -1,6 +1,6 @@
 
-rohrpost |travis|
-=================
+rohrpost |travis| |coveralls|
+=============================
 
 **`rohrpost` is still very much a WIP project. Its interface and structure may still be subject
 to unpredictable changes.**
@@ -127,3 +127,5 @@ Run tests and style checks in this directory::
 .. _routing documentation: http://channels.readthedocs.io/en/latest/routing.html
 .. |travis| image:: https://travis-ci.org/axsemantics/rohrpost.svg?branch=master
     :target: https://travis-ci.org/axsemantics/rohrpost
+.. |coveralls| image:: https://coveralls.io/repos/github/axsemantics/rohrpost/badge.svg?branch=master
+    :target: https://coveralls.io/github/axsemantics/rohrpost?branch=master
