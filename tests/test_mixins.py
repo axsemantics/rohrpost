@@ -151,7 +151,6 @@ def test_with_serializer(obj_with_serializer, monkeypatch):
 
     # create
     obj_with_serializer.save()
-    print(LOGGED_DATA)
     assert len(LOGGED_DATA['modelwithserializer-1']) == 1
     assert LOGGED_DATA['modelwithserializer-1'][-1]['type'] == 'subscription-update'
     assert LOGGED_DATA['modelwithserializer-1'][-1]['data']['type'] == 'create'
