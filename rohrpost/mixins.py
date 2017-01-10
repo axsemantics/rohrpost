@@ -27,7 +27,7 @@ class PushNotificationOnChangeModelMixin:
             "type": <create|update|delete>,
             "group": <group-name>,
             "object": <serialized object if object.serializer_class is set, else
-                       {"id": <object.id>}>,
+                       {"id": <object.id>}>, "id" being a guaranteed key
             <additional data from object.get_push_notification_data()>
         }
     }
@@ -43,19 +43,20 @@ class PushNotificationOnChangeModelMixin:
         )
 
     def _get_push_data(self):
+        obj_data = {'id': self.pk}
         if hasattr(self, 'serializer_class'):
-            obj_data = self.serializer_class(self).data
-        else:
-            obj_data = {'id': self.pk}
+            obj_data.update(self.serializer_class(self).data)
         if hasattr(self, 'get_push_notification_data'):
             obj_data.update(self.get_push_notification_data())
         return obj_data
 
     def _send_notify(self, message_type):
         group_name = self._get_group_name()
-        message_data = self._get_push_data()
-        message_data['type'] = message_type
-        message_data['group'] = group_name
+        message_data = {
+            'group': self._get_group_name(),
+            'type': message_type,
+            'object': self._get_push_data(),
+        }
         Group(group_name).send({
             'text': json.dumps(build_message(
                 generate_id=True,
