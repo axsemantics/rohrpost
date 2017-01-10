@@ -9,7 +9,7 @@ install:
 script:
     - pylama .
     - isort -rc -c .
-    - py.test tests
+    - pytest --cov-report term-missing --cov=rohrpost tests
 cache:
     directories:
         - $HOME/.cache/pip
