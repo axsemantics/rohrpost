@@ -68,6 +68,8 @@ Handlers
 `rohrpost` provides a set of helper methods for writing your own handlers. Please read the
 developer documentation for further information. Most notably, you'll need the `rohrpost_handler`
 decorator, and probably at least one of `send_message`, `send_success`, and `send_error`.
+There is also a `build_message` method that can optionally add a random ID to server-initiated
+messages.
 This is how the included `ping` handler works:
 
 .. code:: Python
@@ -90,6 +92,15 @@ This is how the included `ping` handler works:
                 message_id=request['id'],
                 handler='pong',
             )
+
+Mixins
+######
+
+`rohrpost` also provides a mixin for Django_ models to push notifications on changes (create,
+update, delete). Sessions should be added to the group for the corresponding object to receive
+push notifications in standard `rohrpost` format.
+
+Further documentation can be found in `rohrpost/mixin.py`.
 
 
 Development
