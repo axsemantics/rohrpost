@@ -20,7 +20,7 @@ def handle_rohrpost_message(message):
 
     try:
         request = json.loads(message.content['text'])
-    except json.JSONDecodeError as e:
+    except (json.JSONDecodeError, TypeError) as e:
         return _send_error('Could not decode JSON message. Error: {}'.format(str(e)))
 
     if not isinstance(request, dict):
