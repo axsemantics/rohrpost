@@ -9,7 +9,7 @@ def test_ping(message):
     data = message.reply_channel.data[-1]
     assert data['id'] == 123
     assert data['type'] == 'pong'
-    assert not 'data' in data
+    assert 'data' not in data
 
 
 def test_ping_additional_data(message):

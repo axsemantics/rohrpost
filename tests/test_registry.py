@@ -1,6 +1,6 @@
 import pytest
 
-from rohrpost.registry import rohrpost_handler, HANDLERS
+from rohrpost.registry import HANDLERS, rohrpost_handler
 
 
 def test_register_entry():
