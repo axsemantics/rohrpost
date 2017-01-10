@@ -1,0 +1,15 @@
+language: python
+sudo: false
+python:
+    - "3.5"
+    - "3.6"
+install:
+    - pip install -U pip wheel setuptools
+    - pip install -r requirements/dev.txt
+script:
+    - pylama .
+    - isort -rc -c .
+    - py.test tests
+cache:
+    directories:
+        - $HOME/.cache/pip
