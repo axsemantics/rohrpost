@@ -9,14 +9,20 @@ def handle_ping(message, request):
     {
         "id": 123,
         "type": "ping",
-        "data": "",
+        "data": {
+            "some": "data"
+        },
     }
     Response (again, with "data" optional but the same as in the request):
     {
         "id": 123,
         "type": "pong",
-        "data": "",
+        "data": {
+            "some": "data"
+        },
     }
+    Caution: if the sent data is not a dict, it will be wrapped in an
+    additional "data" object in the response.
     """
     response_kwargs = {
         'message': message,
@@ -24,6 +30,9 @@ def handle_ping(message, request):
         'handler': 'pong'
     }
     if 'data' in request:
-        response_kwargs['data'] = request['data']
+        if isinstance(request['data'], dict):
+            response_kwargs.update(request['data'])
+        else:
+            response_kwargs['data'] = request['data']
 
     send_message(**response_kwargs)
