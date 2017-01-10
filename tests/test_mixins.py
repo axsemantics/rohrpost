@@ -1,7 +1,6 @@
 import json
 from collections import defaultdict
 
-
 LOGGED_DATA = defaultdict(list)
 
 

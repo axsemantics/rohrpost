@@ -1,12 +1,12 @@
 import json
 
+from .message import build_message
+
 try:
     from channels import Group
 except:
     Group = None
     print('Channels is not installed, running in test mode!')
-
-from .message import build_message
 
 
 class PushNotificationOnChangeModelMixin:
