@@ -1,5 +1,6 @@
-rohrpost
-========
+
+rohrpost |travis|
+=================
 
 **`rohrpost` is still very much a WIP project. Its interface and structure may still be subject
 to unpredictable changes.**
@@ -124,3 +125,5 @@ Run tests and style checks in this directory::
 .. _Django: https://www.djangoproject.com/
 .. _rohrpost-js: https://github.com/axsemantics/rohrpost-js
 .. _routing documentation: http://channels.readthedocs.io/en/latest/routing.html
+.. |travis| image:: https://travis-ci.org/axsemantics/rohrpost.svg?branch=master
+    :target: https://travis-ci.org/axsemantics/rohrpost
