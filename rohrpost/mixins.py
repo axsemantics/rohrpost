@@ -67,7 +67,7 @@ class PushNotificationOnChangeModelMixin:
 
     def save(self, *args, **kwargs):
         message_type = 'update' if self.pk else 'create'
-        ret = super().save(self, *args, **kwargs)
+        ret = super().save(*args, **kwargs)
         self._send_notify(message_type)
         return ret
 
