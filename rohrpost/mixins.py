@@ -12,12 +12,16 @@ except:
 class PushNotificationOnChangeModelMixin:
     """
     This model mixin class sends rohrpost messages every time an object is created, updated, or
-    deleted, to the corresponding group. The group is named:
+    deleted, to the corresponding group. The group is named, most important first:
         - As the result of get_group_name() if the object has such a method
         - As the result of group_name.format(pk=object.pk) if the object/class has a group_name
           attribute
         - As the result of '{class_name}-{pk}'.format(class_name=object.__class__.__name__.lower()
           pk=object.pk) otherwise
+    The serialized object will be taken either from:
+        - The result of get_push_notification_data() if such a method exists, else
+        - The result of serializer_class(self).data, if such an attribute exists, else
+        - {"id": self.pk}
 
     The message will look like this:
     {
@@ -26,9 +30,7 @@ class PushNotificationOnChangeModelMixin:
         "data": {
             "type": <create|update|delete>,
             "group": <group-name>,
-            "object": <serialized object if object.serializer_class is set, else
-                       {"id": <object.id>}>, "id" being a guaranteed key
-                      plus the output of <additional data from object.get_push_notification_data()>
+            "object": <serialized object>,
         }
     }
     """
@@ -43,11 +45,12 @@ class PushNotificationOnChangeModelMixin:
         )
 
     def _get_push_data(self):
-        obj_data = {'id': self.pk}
-        if hasattr(self, 'serializer_class'):
-            obj_data.update(self.serializer_class(self).data)
         if hasattr(self, 'get_push_notification_data'):
-            obj_data.update(self.get_push_notification_data())
+            obj_data = self.get_push_notification_data()
+        elif hasattr(self, 'serializer_class'):
+            obj_data = self.serializer_class(self).data
+        else:
+            obj_data = {'id': self.pk}
         return obj_data
 
     def _send_notify(self, message_type):
