@@ -22,6 +22,9 @@ class PushNotificationOnChangeModelMixin:
         - The result of get_push_notification_data() if such a method exists, else
         - The result of serializer_class(self).data, if such an attribute exists, else
         - {"id": self.pk}
+    The serialized object will also contain an 'updated_fields' attribute with a list *if*
+    'updated_fields' was not set by the get_push_notification_data() or the serializer_class
+    *and* if it was set when calling the save() method.
 
     The message will look like this:
     {
@@ -53,13 +56,16 @@ class PushNotificationOnChangeModelMixin:
             obj_data = {'id': self.pk}
         return obj_data
 
-    def _send_notify(self, message_type):
+    def _send_notify(self, message_type, updated_fields=None):
         group_name = self._get_group_name()
         message_data = {
             'group': self._get_group_name(),
             'type': message_type,
             'object': self._get_push_data(),
         }
+        if updated_fields and not 'updated_fields' in message_data['object']:
+            message_data['updated_fields'] = updated_fields
+
         Group(group_name).send({
             'text': json.dumps(build_message(
                 generate_id=True,
@@ -71,7 +77,7 @@ class PushNotificationOnChangeModelMixin:
     def save(self, *args, **kwargs):
         message_type = 'update' if self.pk else 'create'
         ret = super().save(*args, **kwargs)
-        self._send_notify(message_type)
+        self._send_notify(message_type, updated_fields=kwargs.get('update_fields'))
         return ret
 
     def delete(self, *args, **kwargs):
