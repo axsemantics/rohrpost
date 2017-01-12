@@ -70,7 +70,7 @@ class NotifyOnChange:
             'text': json.dumps(build_message(
                 generate_id=True,
                 handler='subscription-update',
-                **message_data,
+                **message_data
             ))
         })
 
