@@ -1,6 +1,6 @@
 
-rohrpost |travis| |coveralls|
-=============================
+rohrpost |travis| |coveralls| |pypi|
+====================================
 
 **`rohrpost` is still very much a WIP project. Its interface and structure may still be subject
 to unpredictable changes.**
@@ -129,3 +129,5 @@ Run tests and style checks in this directory::
     :target: https://travis-ci.org/axsemantics/rohrpost
 .. |coveralls| image:: https://coveralls.io/repos/github/axsemantics/rohrpost/badge.svg?branch=master
     :target: https://coveralls.io/github/axsemantics/rohrpost?branch=master
+.. |pypi| image:: https://img.shields.io/pypi/v/rohrpost.svg
+    :target: https://pypi.python.org/pypi/rohrpost/
