@@ -55,3 +55,14 @@ def test_successful_handle(message):
 
     assert len(message.reply_channel.data) == 1
     assert message.reply_channel.data[-1]['type'] == 'pong'
+
+
+def test_successful_handle_zero_id(message):
+    message.content = {'text': json.dumps({
+        'id': 0,
+        'type': 'ping',
+    })}
+    handle_rohrpost_message(message)
+
+    assert len(message.reply_channel.data) == 1
+    assert message.reply_channel.data[-1]['type'] == 'pong'

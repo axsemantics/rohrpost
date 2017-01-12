@@ -37,7 +37,7 @@ def send_success(message, message_id, handler, close=False, **additional_data):
     """
     This method directly wraps send_message but checks the existence of id and type.
     """
-    if not message_id or not handler:
+    if message_id is None or handler is None:
         raise Exception('You have to provide a message ID and handler on success messages.')
 
     send_message(message, message_id, handler, close=close, **additional_data)
