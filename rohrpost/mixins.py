@@ -64,7 +64,7 @@ class PushNotificationOnChangeModelMixin:
             'object': self._get_push_data(),
         }
         if updated_fields and 'updated_fields' not in message_data['object']:
-            message_data['updated_fields'] = updated_fields
+            message_data['object']['updated_fields'] = updated_fields
 
         Group(group_name).send({
             'text': json.dumps(build_message(

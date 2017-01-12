@@ -39,6 +39,34 @@ def test_without_name(plain_obj, monkeypatch):
     LOGGED_DATA['plainexamplemodel-1'] = []
 
 
+def test_send_update_fields(plain_obj, monkeypatch):
+    monkeypatch.setattr('rohrpost.mixins.Group', MockGroup)
+
+    # create
+    plain_obj.save()
+    assert len(LOGGED_DATA['plainexamplemodel-1']) == 1
+    assert LOGGED_DATA['plainexamplemodel-1'][-1]['type'] == 'subscription-update'
+    assert LOGGED_DATA['plainexamplemodel-1'][-1]['data']['type'] == 'create'
+    assert LOGGED_DATA['plainexamplemodel-1'][-1]['data']['object']['id'] == 1
+    assert 'updated_fields' not in LOGGED_DATA['plainexamplemodel-1'][-1]['data']['object']
+
+    # update without fields
+    plain_obj.save(update_fields=[])
+    assert len(LOGGED_DATA['plainexamplemodel-1']) == 2
+    assert LOGGED_DATA['plainexamplemodel-1'][-1]['type'] == 'subscription-update'
+    assert LOGGED_DATA['plainexamplemodel-1'][-1]['data']['type'] == 'update'
+    assert LOGGED_DATA['plainexamplemodel-1'][-1]['data']['object']['id'] == 1
+    assert 'updated_fields' not in LOGGED_DATA['plainexamplemodel-1'][-1]['data']['object']
+
+    # update with fields
+    plain_obj.save(update_fields=['something', 'something_else'])
+    assert len(LOGGED_DATA['plainexamplemodel-1']) == 3
+    assert LOGGED_DATA['plainexamplemodel-1'][-1]['type'] == 'subscription-update'
+    assert LOGGED_DATA['plainexamplemodel-1'][-1]['data']['type'] == 'update'
+    assert LOGGED_DATA['plainexamplemodel-1'][-1]['data']['object']['id'] == 1
+    assert 'something_else' in LOGGED_DATA['plainexamplemodel-1'][-1]['data']['object']['updated_fields']
+
+
 def test_with_attribute_name(obj_with_attr, monkeypatch):
     monkeypatch.setattr('rohrpost.mixins.Group', MockGroup)
 
