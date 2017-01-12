@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from rohrpost.mixins import PushNotificationOnChangeModelMixin
+from rohrpost.mixins import NotifyOnChange
 
 
 class ReplyChannel:
@@ -36,7 +36,7 @@ class MockModel:
         pass
 
 
-class PlainExampleModel(PushNotificationOnChangeModelMixin, MockModel):
+class PlainExampleModel(NotifyOnChange, MockModel):
     def __init__(self):
         self.pk = None
         self.name = 'test object name'

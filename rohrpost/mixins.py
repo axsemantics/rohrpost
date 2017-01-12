@@ -9,7 +9,7 @@ except:
     print('Channels is not installed, running in test mode!')
 
 
-class PushNotificationOnChangeModelMixin:
+class NotifyOnChange:
     """
     This model mixin class sends rohrpost messages every time an object is created, updated, or
     deleted, to the corresponding group. The group is named, most important first:
