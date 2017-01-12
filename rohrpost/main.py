@@ -8,6 +8,13 @@ from .registry import HANDLERS
 REQUIRED_FIELDS = ['type', 'id']
 
 
+try:
+    DECODE_ERRORS = (json.JSONDecodeError, TypeError)
+except AttributeError:
+    # Python 3.3 and 3.4 raise a ValueError instead of json.JSONDecodeError
+    DECODE_ERRORS = (ValueError, TypeError)
+
+
 def handle_rohrpost_message(message):
     """
     Handling of a rohrpost message will validate the required format:
@@ -20,7 +27,7 @@ def handle_rohrpost_message(message):
 
     try:
         request = json.loads(message.content['text'])
-    except (json.JSONDecodeError, TypeError) as e:
+    except DECODE_ERRORS as e:
         return _send_error('Could not decode JSON message. Error: {}'.format(str(e)))
 
     if not isinstance(request, dict):
