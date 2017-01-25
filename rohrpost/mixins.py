@@ -19,12 +19,13 @@ class NotifyOnChange:
         - As the result of '{class_name}-{pk}'.format(class_name=object.__class__.__name__.lower()
           pk=object.pk) otherwise
     The serialized object will be taken either from:
-        - The result of get_push_notification_data() if such a method exists, else
+        - The result of get_push_notification_data(updated_fields=None) if such a method exists, else
         - The result of serializer_class(self).data, if such an attribute exists, else
         - {"id": self.pk}
     The serialized object will also contain an 'updated_fields' attribute with a list *if*
     'updated_fields' was not set by the get_push_notification_data() or the serializer_class
     *and* if it was set when calling the save() method.
+    get_push_notification_data() receives a list of updated_fields.
 
     The message will look like this:
     {
@@ -47,9 +48,9 @@ class NotifyOnChange:
             pk=self.pk,
         )
 
-    def _get_push_data(self):
+    def _get_push_data(self, updated_fields=None):
         if hasattr(self, 'get_push_notification_data'):
-            obj_data = self.get_push_notification_data()
+            obj_data = self.get_push_notification_data(updated_fields=updated_fields)
         elif hasattr(self, 'serializer_class'):
             obj_data = self.serializer_class(self).data
         else:
@@ -61,7 +62,7 @@ class NotifyOnChange:
         message_data = {
             'group': self._get_group_name(),
             'type': message_type,
-            'object': self._get_push_data(),
+            'object': self._get_push_data(updated_fields=updated_fields),
         }
         if updated_fields and 'updated_fields' not in message_data['object']:
             message_data['object']['updated_fields'] = updated_fields
