@@ -4,7 +4,7 @@ from .message import build_message
 
 try:
     from channels import Group
-except:
+except ImportError:
     Group = None
     print('Channels is not installed, running in test mode!')
 
