@@ -65,7 +65,7 @@ class ModelWithAttrMixin:
 
 
 class ModelWithMethodMixin:
-    def get_group_name(self):
+    def get_group_name(self, message_type):
         return 'method-example-{self.pk}'.format(self=self)
 
 

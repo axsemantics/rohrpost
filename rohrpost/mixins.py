@@ -11,9 +11,9 @@ except ImportError:
 
 class NotifyBase:
 
-    def _get_group_name(self):
+    def _get_group_name(self, message_type=''):
         if hasattr(self, "get_group_name"):
-            return self.get_group_name()
+            return self.get_group_name(message_type=message_type)
         if hasattr(self, "group_name"):
             return self.group_name.format(pk=self.pk)
         return '{class_name}-{pk}'.format(
@@ -31,9 +31,9 @@ class NotifyBase:
         return obj_data
 
     def _send_notify(self, message_type, updated_fields=None):
-        group_name = self._get_group_name()
+        group_name = self._get_group_name(message_type=message_type)
         message_data = {
-            'group': self._get_group_name(),
+            'group': group_name,
             'type': message_type,
             'object': self._get_push_data(updated_fields=updated_fields),
         }
