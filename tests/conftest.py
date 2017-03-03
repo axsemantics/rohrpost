@@ -70,7 +70,7 @@ class ModelWithMethodMixin:
 
 
 class ModelWithDataMixin:
-    def get_push_notification_data(self, updated_fields=None):
+    def get_push_notification_data(self, updated_fields=None, message_type=None):
         return {
             'extra_name': self.name,
             'extra_name_backwards': self.name[::-1],

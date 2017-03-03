@@ -21,9 +21,9 @@ class NotifyBase:
             pk=self.pk,
         )
 
-    def _get_push_data(self, updated_fields=None):
+    def _get_push_data(self, updated_fields=None, message_type=None):
         if hasattr(self, 'get_push_notification_data'):
-            obj_data = self.get_push_notification_data(updated_fields=updated_fields)
+            obj_data = self.get_push_notification_data(updated_fields=updated_fields, message_type=message_type)
         elif hasattr(self, 'serializer_class'):
             obj_data = self.serializer_class(self).data
         else:
@@ -35,7 +35,7 @@ class NotifyBase:
         message_data = {
             'group': group_name,
             'type': message_type,
-            'object': self._get_push_data(updated_fields=updated_fields),
+            'object': self._get_push_data(updated_fields=updated_fields, message_type=message_type),
         }
         if updated_fields and 'updated_fields' not in message_data['object']:
             message_data['object']['updated_fields'] = updated_fields
