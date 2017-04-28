@@ -8,6 +8,12 @@ except ImportError:
     Group = None
     print('Channels is not installed, running in test mode!')
 
+try:
+    from django.db.transaction import on_commit as on_transaction_commit
+except ImportError:
+    def on_transaction_commit(func):
+        func()
+
 
 class NotifyBase:
 
@@ -40,13 +46,17 @@ class NotifyBase:
         if updated_fields and 'updated_fields' not in message_data['object']:
             message_data['object']['updated_fields'] = updated_fields
 
-        Group(group_name).send({
+        payload = {
             'text': json.dumps(build_message(
                 generate_id=True,
                 handler='subscription-update',
                 **message_data
             ))
-        })
+        }
+
+        on_transaction_commit(
+            lambda: Group(group_name).send(payload)
+        )
 
 
 class NotifyOnCreate(NotifyBase):
