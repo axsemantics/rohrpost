@@ -36,7 +36,7 @@ class NotifyBase:
             obj_data = {'id': self.pk}
         return obj_data
 
-    def _send_notify(self, message_type, updated_fields=None):
+    def _send_notify(self, message_type, updated_fields=None, always_send=True):
         group_name = self._get_group_name(message_type=message_type)
         message_data = {
             'group': group_name,
@@ -45,6 +45,10 @@ class NotifyBase:
         }
         if updated_fields and 'updated_fields' not in message_data['object']:
             message_data['object']['updated_fields'] = updated_fields
+
+        if message_type == 'update' and updated_fields and always_send is False:
+            if not set(updated_fields) & set(message_data['object'].keys()):
+                return
 
         payload = {
             'text': json.dumps(build_message(
@@ -70,12 +74,17 @@ class NotifyOnCreate(NotifyBase):
 
 
 class NotifyOnUpdate(NotifyBase):
+    rohrpost_always_send = True  # Toggle if even data not reflecting upldate_fields should be sent
 
     def save(self, *args, **kwargs):
         initial_pk = self.pk
         ret = super().save(*args, **kwargs)
         if initial_pk:
-            self._send_notify('update', updated_fields=kwargs.get('update_fields'))
+            self._send_notify(
+                'update',
+                updated_fields=kwargs.get('update_fields'),
+                always_send=self.rohrpost_always_send,
+            )
         return ret
 
 
