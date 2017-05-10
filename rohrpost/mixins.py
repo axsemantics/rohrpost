@@ -36,12 +36,12 @@ class NotifyBase:
             obj_data = {'id': self.pk}
         return obj_data
 
-    def _send_notify(self, message_type, updated_fields=None, always_send=True):
+    def _send_notify(self, message_type, updated_fields=None, data=None, always_send=True):
         group_name = self._get_group_name(message_type=message_type)
         message_data = {
             'group': group_name,
             'type': message_type,
-            'object': self._get_push_data(updated_fields=updated_fields, message_type=message_type),
+            'object': data or self._get_push_data(updated_fields=updated_fields, message_type=message_type),
         }
         if updated_fields and 'updated_fields' not in message_data['object']:
             message_data['object']['updated_fields'] = updated_fields
