@@ -58,3 +58,16 @@ This is how the ping method is implemented:
     if 'data' in request:
         response_kwargs['data'] = request['data']
     send_message(**response_kwargs)
+Utility methods
+---------------
+
+rohrpost provides three main helper methods for message sending in ``rohrpost.message``:
+
+- ``rohrpost.message.send_message``
+  - ``message``: The original message you are replying to (**required**).
+  - ``handler``: The string identifying your handler (**required**).
+  - ``message_id``: The message ID (any simple datatype allowed). If none is provided, an integer will be randomly chosen.
+  - ``close``: Set to ``True`` if you want to close the connection.
+  - ``error``: Include an error message or error content
+  - ``**additional_data``: Any other keyword argument will be included in the message in the ``data`` field as a JSON object.
+- ``rohrpost.message.send_error`` sends an error message explicitly, takes the same arguments as ``send_message``.
