@@ -58,6 +58,45 @@ This is how the ping method is implemented:
     if 'data' in request:
         response_kwargs['data'] = request['data']
     send_message(**response_kwargs)
+
+Using the mixins
+----------------
+
+There are four relevant Django model mixins in ``rohrpost.mixins``:
+``NotifyOnCreate``, ``NotifyOnUpdate``, ``NotifyOnDelete`` and
+``NotifyOnChange`` which inherits from the previous three classes.
+
+On all of these classes, you'll need to set some fields or implement
+some methods:
+
+- ``get_group_name(self, message_type)`` or ``group_name``, with the method
+  having preference over the attribute. This method or attribute should return
+  a string that denotes the group receiving the message. All users in that
+  group will receive a message. This gives you the possiblity to build
+  per-object, per-class or global groups.
+  If neither the message nor the attribute are given, the group name is
+  the lowercased class name combined with the object's ID:
+  f'{object.__class__.__name__.lower()}-{object.pk}'
+- ``get_push_notification_data(self, updated_fields, message_type)`` returning a dictionary
+  (or any data structure) containing the data you wish to send to the client.
+  The serialized object will be updated with an ``updated_fields`` attribute with a list *if*
+  ``updated_fields`` was not set by the ``get_push_notification_data()``
+  *and* if it was set when calling the ``save()`` method.
+  The fallback value if the method is not implemented is ``{"id": obj.id}``.
+
+The message will look like this::
+
+    {
+        "id": <some id>,
+        "type": "subscription-update",
+        "data": {
+            "type": <create|update|delete>,
+            "group": <group-name>,
+            "object": <serialized object>,
+        }
+    }
+
+
 Utility methods
 ---------------
 
