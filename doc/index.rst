@@ -110,3 +110,10 @@ rohrpost provides three main helper methods for message sending in ``rohrpost.me
   - ``error``: Include an error message or error content
   - ``**additional_data``: Any other keyword argument will be included in the message in the ``data`` field as a JSON object.
 - ``rohrpost.message.send_error`` sends an error message explicitly, takes the same arguments as ``send_message``.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+
+.. _channels: https://github.com/django/channels
+.. _Django's: http://djangoproject.com/
