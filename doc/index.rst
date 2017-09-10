@@ -4,9 +4,9 @@ rohrpost – a protocol for Django Channels
 Welcome to the rohrpost documentation!
 
 rohrpost is a small library that aims to make protocol development for `Django's`_
-sub-project channels_ (which provides websockets capabilities) easy and fun.
+sub-project channels_ (which provides WebSockets capabilities) easy and fun.
 
-It features a light weight, JSON based protocol, inculding an exemplary handler
+It features a light weight, JSON based protocol, including an exemplary handler
 implementing a ping/pong method. It also comes with a variety of helper methods,
 and Django model mixins that allow to automatically send updates when an object
 is updated, deleted, or created.
@@ -15,7 +15,7 @@ Protocol
 --------
 
 The rohrpost protocol sits on top of channels_ inside the ``text`` component
-of a channels message. Rohrpost expects this ``text`` component to be valid
+of a channels message. rohrpost expects this ``text`` component to be valid
 JSON with
 
 - An ``id`` field that will be sent back in the response.
@@ -72,10 +72,10 @@ some methods:
 - ``get_group_name(self, message_type)`` or ``group_name``, with the method
   having preference over the attribute. This method or attribute should return
   a string that denotes the group receiving the message. All users in that
-  group will receive a message. This gives you the possiblity to build
+  group will receive a message. This gives you the possibility to build
   per-object, per-class or global groups.
   If neither the message nor the attribute are given, the group name is
-  the lowercased class name combined with the object's ID:
+  the lower cased class name combined with the object's ID:
   f'{object.__class__.__name__.lower()}-{object.pk}'
 - ``get_push_notification_data(self, updated_fields, message_type)`` returning a dictionary
   (or any data structure) containing the data you wish to send to the client.
