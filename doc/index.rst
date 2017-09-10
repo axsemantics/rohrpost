@@ -34,3 +34,27 @@ A typical message would look like this:
        "handler": "ping",
        "data": [1, 2, 3, 4]
    }
+
+Adding Handlers
+---------------
+
+rohrpost provides a decorator ``rohrpost_handler``, that accepts both a string
+and a list to register a method as the handler for incoming messages.
+This is how the ping method is implemented:
+
+.. code-block:: python
+
+   from rohrpost.message import send_message
+   from rohrpost.registry import rohrpost_handler
+
+
+   @rohrpost_handler('ping')
+   def handle_ping(message, request):
+    response_kwargs = {
+        'message': message,
+        'message_id': request['id'],
+        'handler': 'pong'
+    }
+    if 'data' in request:
+        response_kwargs['data'] = request['data']
+    send_message(**response_kwargs)
