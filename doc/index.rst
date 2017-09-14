@@ -22,8 +22,9 @@ JSON with
 - A ``type`` field that contains a string defining the message type
   (and hence, which handler will process the message).
 - An optional ``data`` field containing whatever data rohrpost should
-  transmit to the handler. Please note that rohrpost will transmit all request
-  data to the handler, and the naming of the ``data`` field is convention only.
+  pass to the handler. Please note that rohrpost will pass all request
+  data to the handler, and the naming of the ``data`` field is convention, not
+  a rule.
 
 A typical message would look like this:
 
@@ -62,11 +63,11 @@ This is how the ping method works:
 Using the mixins
 ----------------
 
-There are four relevant Django model mixins in ``rohrpost.mixins``:
+We have four relevant Django model mixins in ``rohrpost.mixins``:
 ``NotifyOnCreate``, ``NotifyOnUpdate``, ``NotifyOnDelete`` and
 ``NotifyOnChange`` which inherits from the previous three classes.
 
-On all of these classes, you'll need to set some fields or implement
+When using these mixins, you'll need to set some fields or fill in
 some methods:
 
 - ``get_group_name(self, message_type)`` or ``group_name``, with the method
@@ -84,7 +85,7 @@ some methods:
   attribute with a list *if* you do not set ``updated_fields`` in
   ``get_push_notification_data()`` *and* if you set it when calling the
   ``save()`` method that lead to the notification.
-  The fallback value if you do not implement this method is ``{"id": obj.id}``.
+  The fallback value if you do not fill in this method is ``{"id": obj.id}``.
 
 The message will look like this::
 
