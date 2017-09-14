@@ -5,7 +5,7 @@ rohrpost |travis| |coveralls| |pypi|
 **`rohrpost` is still very much a WIP project. Its interface and structure may still be subject
 to unpredictable changes.**
 
-`rohrpost` is a simple WebSocket protocol. It is designed to work with Django_ using Channels_ but
+`rohrpost` is a simple WebSocket protocol. It works very well with Django_ using Channels_ but
 will interface with every base service implementing the ASGI_ specification (which, at the moment,
 is mostly Channels_ with Daphne_).
 
@@ -25,10 +25,10 @@ a `type` (string), and an optional data field (any JSON type):
         "data": "something",
     }
 
-The server will (if the mandatory fields have been sent) try to give the message to the handler
+The server will (if it receives the mandatory fields) try to give the message to the handler
 responsible for that type. The handler should respond with a message containing the same `id` and
 `type`. Its `data` object should contain {"error": <some error>}"` on errors as a top-level field.
-Additional data may be provided via the data field as per usual.
+The server may include additional data the data field.
 
 `rohrpost` natively only provides the `ping` handler, please see Handlers_ below for a guide on
 how to write your own handlers.
@@ -98,17 +98,17 @@ Mixins
 ######
 
 `rohrpost` also provides a mixin for Django_ models to push notifications on changes (create,
-update, delete). Sessions should be added to the group for the corresponding object to receive
-push notifications in standard `rohrpost` format.
+update, delete). If users should receive these notifications, you have to add them to the
+matching group beforehand.
 
-Further documentation can be found in `rohrpost/mixin.py`.
+You can find further documentation in `rohrpost/mixin.py`.
 
 
 Development
 -----------
 
 For development you'll need to have the test environment installed. This is rather large since
-`rohrpost` is meant to be used in conjunction with Channels_, Daphne_, Django_ and so on. ::
+`rohrpost` works mainly in conjunction with Channels_, Daphne_, Django_ and so on. ::
 
     pip install -r requirements/dev.txt
 
