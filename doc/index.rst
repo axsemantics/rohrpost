@@ -48,6 +48,19 @@ other data in the ``data`` field.
        "id": 1234,
        "error": "No registered handler called 'ping'."
    }
+
+Installation
+------------
+
+From the command line::
+
+    pip install https://github.com/user/repository/archive/branch.zip
+
+Or add this line to your `requirements.txt`::
+
+    https://github.com/user/repository/archive/branch.zip
+
+
 Adding Handlers
 ---------------
 
