@@ -11,7 +11,7 @@ The client implementation is rohrpost-js_.
 Capabilities
 ------------
 
-`rohrpost` specifies a very simple protocol with messages looking like this::
+`rohrpost` specifies a very simple protocol with messages looking like this:
 
 .. code:: JSON
 
