@@ -3,8 +3,9 @@ rohrpost – a protocol for Django Channels
 
 Welcome to the rohrpost documentation!
 
-rohrpost is a small library that aims to make protocol development for `Django's`_
-sub-project channels_ (which provides WebSockets capabilities) easy and fun.
+rohrpost is a small library that aims to make protocol development for
+`Django's`_ sub-project channels_ (which provides WebSockets capabilities) easy
+and fun.
 
 It features a light weight, JSON based protocol, including an exemplary handler
 implementing a ping/pong method. It also comes with a variety of helper methods,
@@ -14,17 +15,16 @@ updates, deletes, or creates an object.
 Protocol
 --------
 
-The rohrpost protocol sits on top of channels_ inside the ``text`` component
-of a channels message. rohrpost expects this ``text`` component to be valid
-JSON with
+The rohrpost protocol sits on top of channels_ inside the ``text`` component of
+a channels message. rohrpost expects this ``text`` component to be valid JSON
+with
 
 - An ``id`` field that rohrpost sends back in the response.
-- A ``type`` field that contains a string defining the message type
-  (and hence, which handler will process the message).
-- An optional ``data`` field containing whatever data rohrpost should
-  pass to the handler. Please note that rohrpost will pass all request
-  data to the handler, and the naming of the ``data`` field is convention, not
-  a rule.
+- A ``type`` field that contains a string defining the message type (and hence,
+  which handler will process the message).
+- An optional ``data`` field containing whatever data rohrpost should pass to
+  the handler. Please note that rohrpost will pass all request data to the
+  handler, and the naming of the ``data`` field is convention, not a rule.
 
 A typical message would look like this:
 
@@ -40,8 +40,8 @@ Adding Handlers
 ---------------
 
 rohrpost provides a decorator ``rohrpost_handler``, that accepts both a string
-and a list to register a method as the handler for incoming messages.
-This is how the ping method works:
+and a list to register a method as the handler for incoming messages. This is
+how the ping method works:
 
 .. code-block:: python
 
@@ -67,20 +67,19 @@ We have four relevant Django model mixins in ``rohrpost.mixins``:
 ``NotifyOnCreate``, ``NotifyOnUpdate``, ``NotifyOnDelete`` and
 ``NotifyOnChange`` which inherits from the previous three classes.
 
-When using these mixins, you'll need to set some fields or fill in
-some methods:
+When using these mixins, you'll need to set some fields or fill in some methods:
 
 - ``get_group_name(self, message_type)`` or ``group_name``, with the method
-  having preference over the attribute. This method or attribute should return
-  a string that denotes the group receiving the message. All users in that
-  group will receive a message. This gives you the possibility to build
-  per-object, per-class or global groups.
+  having preference over the attribute. This method or attribute should return a
+  string that denotes the group receiving the message. All users in that group
+  will receive a message. This gives you the possibility to build per-object,
+  per-class or global groups.
   If neither the message nor the attribute are present, the group name is the
   lower cased class name combined with the object's ID:
   f'{object.__class__.__name__.lower()}-{object.pk}'
-- ``get_push_notification_data(self, updated_fields, message_type)`` returning
-  a dictionary (or any data structure) containing the data you wish to send to
-  the client.
+- ``get_push_notification_data(self, updated_fields, message_type)`` returning a
+  dictionary (or any data structure) containing the data you wish to send to the
+  client.
   rohrpost will update the serialized object updated with an ``updated_fields``
   attribute with a list *if* you do not set ``updated_fields`` in
   ``get_push_notification_data()`` *and* if you set it when calling the
@@ -103,16 +102,20 @@ The message will look like this::
 Utility methods
 ---------------
 
-rohrpost provides three main helper methods for message sending in ``rohrpost.message``:
+rohrpost provides three main helper methods for message sending in
+``rohrpost.message``:
 
 - ``rohrpost.message.send_message``
   - ``message``: The original message you are replying to (**required**).
   - ``handler``: The string identifying your handler (**required**).
-  - ``message_id``: The message ID (any simple datatype allowed). If you do not provide any, an integer will be randomly chosen.
+  - ``message_id``: The message ID (any simple datatype allowed). If you do not
+    provide any, an integer will be randomly chosen.
   - ``close``: Set to ``True`` if you want to close the connection.
   - ``error``: Include an error message or error content
-  - ``**additional_data``: Any other keyword argument will appear in the message's ``data`` field as a JSON object.
-- ``rohrpost.message.send_error`` sends an error message explicitly, takes the same arguments as ``send_message``.
+  - ``**additional_data``: Any other keyword argument will appear in the
+    message's ``data`` field as a JSON object.
+- ``rohrpost.message.send_error`` sends an error message explicitly, takes the
+  same arguments as ``send_message``.
 
 .. toctree::
    :maxdepth: 1
