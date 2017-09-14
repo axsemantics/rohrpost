@@ -2,19 +2,16 @@
 rohrpost |travis| |coveralls| |pypi|
 ====================================
 
-**`rohrpost` is still very much a WIP project. Its interface and structure may still be subject
-to unpredictable changes.**
-
-`rohrpost` is a simple WebSocket protocol. It works very well with Django_ using Channels_ but
+`rohrpost` is a simple WebSocket protocol. It works well with Django_ using Channels_ but
 will interface with every base service implementing the ASGI_ specification (which, at the moment,
-is mostly Channels_ with Daphne_).
+is primarily Channels_ with Daphne_).
 
 The client implementation is rohrpost-js_.
 
 Protocol
 --------
 
-The `rohrpost` protocol is very simple. The client may send messages containing an `id` (integer),
+The `rohrpost` protocol is simple. The client may send messages containing an `id` (integer),
 a `type` (string), and an optional data field (any JSON type):
 
 .. code:: JSON
@@ -28,9 +25,9 @@ a `type` (string), and an optional data field (any JSON type):
 The server will (if it receives the mandatory fields) try to give the message to the handler
 responsible for that type. The handler should respond with a message containing the same `id` and
 `type`. Its `data` object should contain {"error": <some error>}"` on errors as a top-level field.
-The server may include additional data the data field.
+The server may include other related data the data field.
 
-`rohrpost` natively only provides the `ping` handler, please see Handlers_ below for a guide on
+`rohrpost` natively provides the `ping` handler. Please see Handlers_ below for a guide on
 how to write your own handlers.
 
 Usage
