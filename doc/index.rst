@@ -83,7 +83,7 @@ Adding Handlers
 
 rohrpost provides a decorator ``rohrpost_handler``, that accepts both a string
 and a list to register a method as the handler for incoming messages. This is
-how the ping method works:
+how the ping method works, that rohrpost provides out of the box:
 
 .. code-block:: python
 
@@ -139,6 +139,11 @@ The message will look like this::
             "object": <serialized object>,
         }
     }
+
+You will have to put users who should receive these notifications in the group
+specified by ``get_group_name`` or ``group_name``. Since authentication and
+registration works differently in every use case, rohrpost does not include a
+standard handler for this.
 
 
 Utility methods
