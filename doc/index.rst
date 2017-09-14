@@ -153,6 +153,7 @@ rohrpost provides three main helper methods for message sending in
 ``rohrpost.message``:
 
 - ``rohrpost.message.send_message``
+
   - ``message``: The original message you are replying to (**required**).
   - ``handler``: The string identifying your handler (**required**).
   - ``message_id``: The message ID (any simple datatype allowed). If you do not
@@ -161,6 +162,7 @@ rohrpost provides three main helper methods for message sending in
   - ``error``: Include an error message or error content
   - ``**additional_data``: Any other keyword argument will appear in the
     message's ``data`` field as a JSON object.
+
 - ``rohrpost.message.send_error`` sends an error message explicitly, takes the
   same arguments as ``send_message``.
 
