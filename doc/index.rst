@@ -32,13 +32,13 @@ A typical message would look like this:
 
    {
        "id": 1234,
-       "handler": "ping",
+       "type": "ping",
        "data": [1, 2, 3, 4]
    }
 
 Both server and client messages look like this. When the server receives a
 message, it will hand off the message to the appropriate handler named in the
-``handler`` field. If there is no such handler or the handler fails, the server
+``type`` field. If there is no such handler or the handler fails, the server
 responds with a message containing at least an ``error`` field, and optionally
 other data in the ``data`` field.
 
