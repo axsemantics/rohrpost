@@ -61,6 +61,23 @@ Or add this line to your `requirements.txt`::
     https://github.com/user/repository/archive/branch.zip
 
 
+Routing
+-------
+
+Once you have installed `rohrpost`, you'll need to add the main `rohrpost`
+handler to your `routing.py`. You can find details on this in Channels'
+`routing documentation`_.
+
+.. code:: Python
+
+    from channels import route
+    from rohrpost.main import handle_rohrpost_message
+
+    channel_routing = [
+        route('websocket.receive', handle_rohrpost_message, path=r'/rohrpost/$'),
+    ]
+
+
 Adding Handlers
 ---------------
 
@@ -149,3 +166,4 @@ rohrpost provides three main helper methods for message sending in
 .. _channels: https://github.com/django/channels
 .. _Django's: http://djangoproject.com/
 .. _rohrpost.js: https://github.com/axsemantics/rohrpost-js
+.. _routing documentation: http://channels.readthedocs.io/en/latest/routing.html
