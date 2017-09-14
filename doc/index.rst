@@ -5,7 +5,7 @@ Welcome to the rohrpost documentation!
 
 rohrpost is a small library that aims to make protocol development for
 `Django's`_ sub-project channels_ (which provides WebSockets capabilities) easy
-and fun.
+and fun. We also have a client library called `rohrpost.js`_.
 
 It features a light weight, JSON based protocol, including an exemplary handler
 implementing a ping/pong method. It also comes with a variety of helper methods,
@@ -123,3 +123,4 @@ rohrpost provides three main helper methods for message sending in
 
 .. _channels: https://github.com/django/channels
 .. _Django's: http://djangoproject.com/
+.. _rohrpost.js: https://github.com/axsemantics/rohrpost-js
