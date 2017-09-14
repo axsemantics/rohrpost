@@ -2,17 +2,16 @@
 rohrpost |travis| |coveralls| |pypi|
 ====================================
 
-`rohrpost` is a simple WebSocket protocol. It works well with Django_ using Channels_ but
-will interface with every base service implementing the ASGI_ specification (which, at the moment,
-is primarily Channels_ with Daphne_).
+`rohrpost` is a simple WebSocket protocol that works well with Django_ using
+Channels_. It will interface with every service implementing the ASGI_
+specification (which, at the moment, is primarily Channels_ with Daphne_).
 
 The client implementation is rohrpost-js_.
 
-Protocol
---------
+Capabilities
+------------
 
-The `rohrpost` protocol is simple. The client may send messages containing an `id` (integer),
-a `type` (string), and an optional data field (any JSON type):
+`rohrpost` specifies a very simple protocol with messages looking like this::
 
 .. code:: JSON
 
@@ -22,19 +21,15 @@ a `type` (string), and an optional data field (any JSON type):
         "data": "something",
     }
 
-The server will (if it receives the mandatory fields) try to give the message to the handler
-responsible for that type. The handler should respond with a message containing the same `id` and
-`type`. Its `data` object should contain {"error": <some error>}"` on errors as a top-level field.
-The server may include other related data the data field.
+This message will be handled by the ping handler (which rohrpost provides out
+of the box). You can add custom handlers using a method decorator. Please see
+`our documentation`_ for details on the protocol and handler implementation.
 
-`rohrpost` natively provides the `ping` handler. Please see Handlers_ below for a guide on
-how to write your own handlers.
-
-Usage
------
+`rohrpost` also provides a mixin for Django_ models to push notifications on
+changes (create, update, delete).
 
 Installation
-############
+------------
 
 From the command line::
 
@@ -44,68 +39,12 @@ Or add this line to your `requirements.txt`::
 
     https://github.com/user/repository/archive/branch.zip
 
-
-Routing
-#######
-
-Once you have installed `rohrpost` that, you'll need to add the main `rohrpost` handler to your
-`routing.py`. You can find details on this in Channels' `routing documentation`_.
-
-.. code:: Python
-
-    from channels import route
-    from rohrpost.main import handle_rohrpost_message
-
-    channel_routing = [
-        route('websocket.receive', handle_rohrpost_message, path=r'/rohrpost/$'),
-    ]
-
-Handlers
-########
-
-`rohrpost` provides a set of helper methods for writing your own handlers. Please read the
-developer documentation for further information. Most notably, you'll need the `rohrpost_handler`
-decorator, and probably at least one of `send_message`, `send_success`, and `send_error`.
-There is also a `build_message` method that can optionally add a random ID to server-initiated
-messages.
-This is how the included `ping` handler works:
-
-.. code:: Python
-
-    from rohrpost.message import send_message
-    from rohrpost.registry import rohrpost_handler
-
-    @rohrpost_handler('ping')
-    def handle_ping(message, request):
-        if 'data' in request:
-            send_message(
-                message=message,
-                message_id=request['id'],
-                handler='pong',
-                data=request['data'],
-            )
-        else:
-            send_message(
-                message=message,
-                message_id=request['id'],
-                handler='pong',
-            )
-
-Mixins
-######
-
-`rohrpost` also provides a mixin for Django_ models to push notifications on changes (create,
-update, delete). If users should receive these notifications, you have to add them to the
-matching group beforehand.
-
-You can find further documentation in `rohrpost/mixin.py`.
-
-
 Development
 -----------
 
-For development you'll need to have the test environment installed. This is rather large since
-`rohrpost` works mainly in conjunction with Channels_, Daphne_, Django_ and so on. ::
+For development you'll need to have the test environment installed. This is
+rather large since `rohrpost` works mainly in conjunction with Channels_,
+Daphne_, Django_ and so on. ::
 
     pip install -r requirements/dev.txt
 
@@ -121,7 +60,7 @@ Run tests and style checks in this directory::
 .. _Daphne: https://github.com/django/daphne/
 .. _Django: https://www.djangoproject.com/
 .. _rohrpost-js: https://github.com/axsemantics/rohrpost-js
-.. _routing documentation: http://channels.readthedocs.io/en/latest/routing.html
+.. _our documentation: https://rohrpost.readthedocs.io
 .. |travis| image:: https://travis-ci.org/axsemantics/rohrpost.svg?branch=master
     :target: https://travis-ci.org/axsemantics/rohrpost
 .. |coveralls| image:: https://coveralls.io/repos/github/axsemantics/rohrpost/badge.svg?branch=master
