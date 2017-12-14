@@ -16,6 +16,7 @@ except ImportError:
 
 
 class NotifyBase:
+    encoder = json.JSONEncoder
 
     def _get_group_name(self, message_type=''):
         if hasattr(self, "get_group_name"):
@@ -58,7 +59,7 @@ class NotifyBase:
                 generate_id=True,
                 handler='subscription-update',
                 **message_data
-            ))
+            ), cls=self.encoder)
         }
 
         on_transaction_commit(
