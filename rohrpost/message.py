@@ -13,7 +13,7 @@ class TolerantJSONEncoder(json.JSONEncoder):
 
 def _send_message(*, message, content: dict, close: bool):
     message.reply_channel.send({
-        'text': json.dumps(content),
+        'text': json.dumps(content, cls=TolerantJSONEncoder),
         'close': close,
     })
 
