@@ -1,6 +1,6 @@
 import json
 
-from .message import build_message
+from .message import TolerantJSONEncoder, build_message
 
 try:
     from channels import Group
@@ -16,7 +16,7 @@ except ImportError:
 
 
 class NotifyBase:
-    encoder = json.JSONEncoder
+    encoder = TolerantJSONEncoder
 
     def _get_group_name(self, message_type=''):
         if hasattr(self, "get_group_name"):

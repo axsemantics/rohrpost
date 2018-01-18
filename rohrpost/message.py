@@ -2,6 +2,15 @@ import json
 import random
 
 
+class TolerantJSONEncoder(json.JSONEncoder):
+
+    def default(self, obj):
+        import uuid
+        if isinstance(obj, uuid.UUID):
+            return str(obj)
+        return json.JSONDecoder.default(self, obj)
+
+
 def _send_message(*, message, content: dict, close: bool):
     message.reply_channel.send({
         'text': json.dumps(content),
