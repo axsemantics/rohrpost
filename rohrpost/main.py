@@ -11,7 +11,7 @@ REQUIRED_FIELDS = ['type', 'id']
 try:
     DECODE_ERRORS = (json.JSONDecodeError, TypeError)
 except AttributeError:
-    # Python 3.3 and 3.4 raise a ValueError instead of json.JSONDecodeError
+    # Python 3.4 raises a ValueError instead of json.JSONDecodeError
     DECODE_ERRORS = (ValueError, TypeError)
 
 
