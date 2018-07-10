@@ -1,5 +1,6 @@
 import json
 import random
+from decimal import Decimal
 
 
 class TolerantJSONEncoder(json.JSONEncoder):
@@ -8,6 +9,8 @@ class TolerantJSONEncoder(json.JSONEncoder):
         import uuid
         if isinstance(obj, uuid.UUID):
             return str(obj)
+        if isinstance(obj, Decimal):
+            return int(obj) if int(obj) == obj else float(obj)
         return json.JSONDecoder.default(self, obj)
 
 
