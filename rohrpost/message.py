@@ -64,7 +64,7 @@ def send_success(*, message, handler, message_id, close=False, **additional_data
         message_id=message_id,
         handler=handler,
         close=close,
-        **additional_data,
+        **additional_data
     )
 
 
@@ -78,5 +78,5 @@ def send_error(*, message, handler, message_id, error, close=False, **additional
         handler=handler,
         error=error,
         close=close,
-        **additional_data,
+        **additional_data
     )
