@@ -18,6 +18,7 @@ script:
     - pylava .
     - isort -rc -c .
     - pytest --cov-report term-missing --cov=rohrpost tests
+    - black --py36 --check --verbose rohrpost
     - cd doc && make html
 after_success:
     - coveralls
