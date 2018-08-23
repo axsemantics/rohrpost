@@ -52,7 +52,7 @@ Run tests and style checks in this directory::
 
     py.test
     isort -rc .
-    pylama
+    pylava
 
 
 .. _ASGI: https://channels.readthedocs.io/en/latest/asgi.html
