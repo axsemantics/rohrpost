@@ -20,7 +20,8 @@ def _rohrpost_handler(func, name):
     return ret_func
 
 
-def rohrpost_handler(name=''):
+def rohrpost_handler(name=""):
     def wrap(f):
         return _rohrpost_handler(f, name)
+
     return wrap

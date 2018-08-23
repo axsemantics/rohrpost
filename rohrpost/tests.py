@@ -8,8 +8,8 @@ class ReplyChannel:
 
     def send(self, message_dict):
         if not self.closed:
-            self.data.append(json.loads(message_dict.get('text')))
-            self.closed = message_dict.get('close', False)
+            self.data.append(json.loads(message_dict.get("text")))
+            self.closed = message_dict.get("close", False)
 
 
 class Message:

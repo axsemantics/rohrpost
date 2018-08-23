@@ -2,7 +2,7 @@ from rohrpost.message import send_message
 from rohrpost.registry import rohrpost_handler
 
 
-@rohrpost_handler('ping')
+@rohrpost_handler("ping")
 def handle_ping(message, request):
     """
     Handles requests of this format ("data" being an optional attribute):
@@ -25,14 +25,14 @@ def handle_ping(message, request):
     additional "data" object in the response.
     """
     response_kwargs = {
-        'message': message,
-        'message_id': request['id'],
-        'handler': 'pong'
+        "message": message,
+        "message_id": request["id"],
+        "handler": "pong",
     }
-    if 'data' in request:
-        if isinstance(request['data'], dict):
-            response_kwargs.update(request['data'])
+    if "data" in request:
+        if isinstance(request["data"], dict):
+            response_kwargs.update(request["data"])
         else:
-            response_kwargs['data'] = request['data']
+            response_kwargs["data"] = request["data"]
 
     send_message(**response_kwargs)
