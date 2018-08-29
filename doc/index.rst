@@ -8,9 +8,9 @@ rohrpost is a small library that aims to make protocol development for
 and fun. We also have a client library called `rohrpost.js`_.
 
 It features a light weight, JSON based protocol, including an exemplary handler
-implementing a ping/pong method. It also comes with a variety of helper methods,
-and Django model mixins that allow to automatically send updates when any user
-updates, deletes, or creates an object.
+implementing a ping/pong method. It also comes with a variety of helper
+functions, and Django model mixins that allow to automatically send updates when
+any user updates, deletes, or creates an object.
 
 Protocol
 --------
@@ -146,10 +146,10 @@ registration works differently in every use case, rohrpost does not include a
 standard handler for this.
 
 
-Utility methods
----------------
+Utility functions
+-----------------
 
-rohrpost provides three main helper methods for message sending in
+rohrpost provides three main helper functions for message sending in
 ``rohrpost.message``:
 
 - ``rohrpost.message.send_message``
