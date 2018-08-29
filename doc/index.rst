@@ -160,8 +160,10 @@ rohrpost provides three main helper methods for message sending in
     provide any, an integer will be randomly chosen.
   - ``close``: Set to ``True`` if you want to close the connection.
   - ``error``: Include an error message or error content
+  - ``data``: A dict that will appear in the message as ``data`` (converted to
+    a JSON object).
   - ``**additional_data``: Any other keyword argument will appear in the
-    message's ``data`` field as a JSON object.
+    message's ``data`` field as a JSON object.  This is deprecated.
 
 - ``rohrpost.message.send_error`` sends an error message explicitly, takes the
   same arguments as ``send_message``.

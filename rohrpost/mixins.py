@@ -64,7 +64,7 @@ class NotifyBase:
         payload = {
             "text": json.dumps(
                 build_message(
-                    generate_id=True, handler="subscription-update", **message_data
+                    generate_id=True, handler="subscription-update", data=message_data
                 ),
                 cls=self.encoder,
             )
