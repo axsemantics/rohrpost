@@ -35,8 +35,8 @@ jobs:
       install: pip install -r requirements/dev.txt
       script:
         - pylava .
-        - isort -rc -c .
-        - black --check --verbose rohrpost
+        - isort -rc -c -df .
+        - black --check --verbose --diff rohrpost
       after_success: true
 
     - stage: release

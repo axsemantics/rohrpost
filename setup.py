@@ -1,4 +1,5 @@
 from setuptools import setup
+
 from rohrpost import __version__
 
 setup(
