@@ -19,7 +19,8 @@ after_success:
 stages:
   - lint
   - test
-  - release
+  - name: release
+    if: tag IS present
 
 jobs:
   include:
