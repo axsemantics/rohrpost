@@ -17,6 +17,7 @@ setup(
     author="Tobias Kunze",
     author_email="tobias.kunze@ax-semantics.com",
     license="MIT",
+    python_requires=">=3.4",
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
