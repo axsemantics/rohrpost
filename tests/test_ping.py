@@ -16,7 +16,7 @@ def test_ping_additional_data(message):
     handle_ping(message, request={
         'id': 123,
         'type': 'ping',
-        'data': {'some': 'data', 'other': 'data'}
+        'data': {'some': 'data', 'other': 'data', 'handler': 'foo'}
     })
     assert message.reply_channel.closed is False
     assert len(message.reply_channel.data) == 1
@@ -25,6 +25,7 @@ def test_ping_additional_data(message):
     assert data['id'] == 123
     assert data['type'] == 'pong'
     assert data['data']['some'] == 'data'
+    assert data['data']['handler'] == 'foo'
 
 
 def test_ping_additional_non_dict_data(message):
