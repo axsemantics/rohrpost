@@ -19,8 +19,7 @@ after_success:
 stages:
   - lint
   - test
-  - name: release
-    if: branch = master
+  - release
 
 jobs:
   include:
@@ -47,7 +46,6 @@ jobs:
         user: axsemantics
         on:
           repo: axsemantics/rohrpost
-          branch: master
           tags: true
           python: 3.6
         distributions: sdist bdist_wheel
