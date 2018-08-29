@@ -32,11 +32,11 @@ Installation
 
 From the command line::
 
-    pip install https://github.com/user/repository/archive/branch.zip
+    pip install rohrpost
 
 Or add this line to your `requirements.txt`::
 
-    https://github.com/user/repository/archive/branch.zip
+    rohrpost==1.x
 
 Development
 -----------
@@ -50,8 +50,9 @@ Daphne_, Django_ and so on. ::
 Run tests and style checks in this directory::
 
     py.test
-    isort -rc .
     pylava
+    isort -rc .
+    black rohrpost tests
 
 
 .. _ASGI: https://channels.readthedocs.io/en/latest/asgi.html
