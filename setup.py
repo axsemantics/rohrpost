@@ -1,8 +1,9 @@
 from setuptools import setup
+from rohrpost import __version__
 
 setup(
     name = 'rohrpost',
-    version = '0.0.0',
+    version = __version__,
 
     description = 'rohrpost WebSocket protocol for ASGI',
 
