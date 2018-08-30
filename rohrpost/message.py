@@ -3,12 +3,6 @@ import random
 from decimal import Decimal
 
 
-def deprecate(message):
-    import warnings
-
-    warnings.warn(message, DeprecationWarning, stacklevel=3)
-
-
 class TolerantJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         import uuid
@@ -27,13 +21,7 @@ def _send_message(*, message, content: dict, close: bool):
 
 
 def build_message(
-    *,
-    handler,
-    message_id=None,
-    error=None,
-    generate_id=False,
-    data: dict = None,
-    **additional_data
+    *, handler, message_id=None, error=None, generate_id=False, data: dict = None
 ):
     content = dict()
     if message_id:
@@ -45,35 +33,14 @@ def build_message(
         content["type"] = handler
     if error:
         content["error"] = error
-    if data or additional_data:
-        content["data"] = data or {}
-        if additional_data:
-            deprecate(
-                "Passing arbitrary kwargs to `build_message()` is depreated."
-                " Pass in a dict `data` instead."
-            )
-            content["data"].update(additional_data)
+    if data:
+        content["data"] = data
     return content
 
 
 def send_message(
-    *,
-    message,
-    handler,
-    message_id=None,
-    close=False,
-    error=None,
-    data: dict = None,
-    **additional_data
+    *, message, handler, message_id=None, close=False, error=None, data: dict = None
 ):
-    if additional_data:
-        deprecate(
-            "Passing arbitrary kwargs to `send_message()` is depreated."
-            " Pass in a dict `data` instead."
-        )
-        if data is None:
-            data = {}
-        data.update(additional_data)
     content = build_message(
         handler=handler, message_id=message_id, error=error, data=data
     )
@@ -83,9 +50,7 @@ def send_message(
     _send_message(message=message, content=content, close=close)
 
 
-def send_success(
-    *, message, handler, message_id, close=False, data: dict = None, **additional_data
-):
+def send_success(*, message, handler, message_id, close=False, data: dict = None):
     """
     This method directly wraps send_message but checks the existence of id and type.
     """
@@ -94,42 +59,15 @@ def send_success(
             "You have to provide a message ID and handler on success messages."
         )
 
-    if additional_data:
-        deprecate(
-            "Passing arbitrary kwargs to `send_success()` is depreated."
-            " Pass in a dict `data` instead."
-        )
-        if data is None:
-            data = {}
-        data.update(additional_data)
-
     send_message(
         message=message, message_id=message_id, handler=handler, close=close, data=data
     )
 
 
-def send_error(
-    *,
-    message,
-    handler,
-    message_id,
-    error,
-    close=False,
-    data: dict = None,
-    **additional_data
-):
+def send_error(*, message, handler, message_id, error, close=False, data: dict = None):
     """
     This method wraps send_message and makes sure that error is a keyword argument.
     """
-    if additional_data:
-        deprecate(
-            "Passing arbitrary kwargs to `send_error()` is depreated."
-            " Pass in a dict `data` instead."
-        )
-        if data is None:
-            data = {}
-        data.update(additional_data)
-
     send_message(
         message=message,
         message_id=message_id,
