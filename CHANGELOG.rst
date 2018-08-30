@@ -1,8 +1,11 @@
 Changelog
 =========
 
+2.0.0 (unreleased)
+------------------
+
 1.1.0
-----------
+-----
 
 - Deprecate ``**additional_data`` in utility functions
 

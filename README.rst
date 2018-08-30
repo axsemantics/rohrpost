@@ -7,6 +7,9 @@ specification (which, at the moment, is primarily Channels_ with Daphne_).
 
 The client implementation is rohrpost-js_.
 
+**NOTE:** The master branch of this repo represents our work towards rohrpost 2.
+You can find the code for the stable release in branch `1.x`.
+
 Capabilities
 ------------
 
