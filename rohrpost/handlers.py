@@ -3,7 +3,7 @@ from rohrpost.registry import rohrpost_handler
 
 
 @rohrpost_handler("ping")
-def handle_ping(message, request):
+def handle_ping(consumer, request):
     """
     Handles requests of this format ("data" being an optional attribute):
     {
@@ -31,4 +31,4 @@ def handle_ping(message, request):
         else:
             data = {"data": request["data"]}
 
-    send_message(message=message, message_id=request["id"], handler="pong", data=data)
+    send_message(consumer=consumer, message_id=request["id"], handler="pong", data=data)
