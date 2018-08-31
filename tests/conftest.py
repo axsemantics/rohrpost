@@ -1,12 +1,12 @@
 import pytest
 
 from rohrpost.mixins import NotifyOnChange
-from rohrpost.tests import Message
+from rohrpost.tests import Consumer
 
 
 @pytest.fixture
-def message():
-    return Message()
+def consumer():
+    return Consumer()
 
 
 class MockModel:
