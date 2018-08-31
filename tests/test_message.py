@@ -20,7 +20,7 @@ def test_send_error_with_additional_data(message):
         message_id=1,
         handler="some_handler",
         error="error_message",
-        some_field="additional_info",
+        data={"some_field": "additional_info"},
     )
     data = message.reply_channel.data
     assert len(data) == 1
@@ -47,7 +47,7 @@ def test_send_error_without_id_with_additional_data(message):
         message_id=None,
         handler="some_handler",
         error="error_message",
-        some_field="additional_info",
+        data={"some_field": "additional_info"},
     )
     data = message.reply_channel.data
     assert len(data) == 1
@@ -63,7 +63,7 @@ def test_send_error_without_id_and_type(message):
         message_id=None,
         handler=None,
         error="error_message",
-        some_field="additional_info",
+        data={"some_field": "additional_info"},
     )
     data = message.reply_channel.data
     assert len(data) == 1
@@ -95,7 +95,7 @@ def test_send_success_with_additional_data(message):
         message=message,
         message_id=1,
         handler="some_handler",
-        some_field="additional_info",
+        data={"some_field": "additional_info"},
     )
     data = message.reply_channel.data
     assert len(data) == 1
@@ -117,7 +117,7 @@ def test_send_success_without_id_with_additional_data(message):
             message=message,
             message_id=None,
             handler="some_handler",
-            some_field="additional_info",
+            data={"some_field": "additional_info"},
         )
     assert "ID and handler" in str(exc.value)
 
@@ -125,7 +125,10 @@ def test_send_success_without_id_with_additional_data(message):
 def test_send_success_without_id_and_type(message):
     with pytest.raises(Exception) as exc:
         send_success(
-            message=message, message_id=None, handler=None, some_field="additional_info"
+            message=message,
+            message_id=None,
+            handler=None,
+            data={"some_field": "additional_info"},
         )
     assert "ID and handler" in str(exc.value)
 
@@ -143,7 +146,7 @@ def test_send_message_with_additional_data(message):
         message=message,
         message_id=1,
         handler="some_handler",
-        some_field="additional_info",
+        data={"some_field": "additional_info"},
     )
     data = message.reply_channel.data
     assert len(data) == 1
@@ -165,7 +168,7 @@ def test_send_message_without_id_with_additional_data(message):
         message=message,
         message_id=None,
         handler="some_handler",
-        some_field="additional_info",
+        data={"some_field": "additional_info"},
     )
     data = message.reply_channel.data
     assert len(data) == 1
@@ -176,7 +179,10 @@ def test_send_message_without_id_with_additional_data(message):
 
 def test_send_message_without_id_and_type(message):
     send_message(
-        message=message, message_id=None, handler=None, some_field="additional_info"
+        message=message,
+        message_id=None,
+        handler=None,
+        data={"some_field": "additional_info"},
     )
     data = message.reply_channel.data
     assert len(data) == 1
