@@ -60,7 +60,7 @@ Run tests and style checks in this directory::
 .. _Daphne: https://github.com/django/daphne/
 .. _Django: https://www.djangoproject.com/
 .. _rohrpost-js: https://github.com/axsemantics/rohrpost-js
-.. _our documentation: https://rohrpost.readthedocs.io
+.. _our documentation: https://rohrpost.readthedocs.io/en/1.x/
 .. |travis| image:: https://travis-ci.org/axsemantics/rohrpost.svg?branch=master
     :target: https://travis-ci.org/axsemantics/rohrpost
 .. |coveralls| image:: https://coveralls.io/repos/github/axsemantics/rohrpost/badge.svg?branch=master

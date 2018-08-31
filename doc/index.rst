@@ -54,11 +54,11 @@ Installation
 
 From the command line::
 
-    pip install https://github.com/user/repository/archive/branch.zip
+    pip install rohrpost
 
 Or add this line to your `requirements.txt`::
 
-    https://github.com/user/repository/archive/branch.zip
+    rohrpost==1.x
 
 
 Routing
@@ -175,4 +175,4 @@ rohrpost provides three main helper functions for message sending in
 .. _channels: https://github.com/django/channels
 .. _Django's: http://djangoproject.com/
 .. _rohrpost.js: https://github.com/axsemantics/rohrpost-js
-.. _routing documentation: http://channels.readthedocs.io/en/latest/routing.html
+.. _routing documentation: https://channels.readthedocs.io/en/1.x/routing.html
