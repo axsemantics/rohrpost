@@ -71,14 +71,12 @@ class NotifyBase:
             if not set(updated_fields) & set(message_data["object"].keys()):
                 return
 
-        payload = {
-            "text": json.dumps(
-                build_message(
-                    generate_id=True, handler="subscription-update", data=message_data
-                ),
-                cls=self.encoder,
-            )
-        }
+        payload = json.dumps(
+            build_message(
+                generate_id=True, handler="subscription-update", data=message_data
+            ),
+            cls=self.encoder,
+        )
 
         on_transaction_commit(lambda: send_to_group(group_name, payload))
 
