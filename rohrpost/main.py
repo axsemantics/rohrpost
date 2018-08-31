@@ -10,7 +10,7 @@ assert handlers  # silence qa
 REQUIRED_FIELDS = ["type", "id"]
 
 try:
-    DECODE_ERRORS: tuple = (json.JSONDecodeError, TypeError)
+    DECODE_ERRORS = (json.JSONDecodeError, TypeError)  # type: tuple
 except AttributeError:
     # Python 3.4 raises a ValueError instead of json.JSONDecodeError
     DECODE_ERRORS = (ValueError, TypeError)
