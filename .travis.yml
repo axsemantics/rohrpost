@@ -36,7 +36,7 @@ jobs:
       script:
         - pylava .
         - isort -rc -c -df .
-        - black --check --verbose --diff rohrpost
+        - black --check --verbose --diff rohrpost tests
       after_success: true
 
     - stage: release
