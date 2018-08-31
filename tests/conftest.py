@@ -22,7 +22,7 @@ class MockModel:
 class PlainExampleModel(NotifyOnChange, MockModel):
     def __init__(self):
         self.pk = None
-        self.name = 'test object name'
+        self.name = "test object name"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -37,27 +37,21 @@ class ExampleSerializer:
 
     @property
     def data(self):
-        return {
-            'serialized_id': self.obj.pk,
-            'serialized_name': self.obj.name,
-        }
+        return {"serialized_id": self.obj.pk, "serialized_name": self.obj.name}
 
 
 class ModelWithAttrMixin:
-    group_name = 'attribute-example-{pk}'
+    group_name = "attribute-example-{pk}"
 
 
 class ModelWithMethodMixin:
     def get_group_name(self, message_type):
-        return 'method-example-{self.pk}'.format(self=self)
+        return "method-example-{self.pk}".format(self=self)
 
 
 class ModelWithDataMixin:
     def get_push_notification_data(self, updated_fields=None, message_type=None):
-        return {
-            'extra_name': self.name,
-            'extra_name_backwards': self.name[::-1],
-        }
+        return {"extra_name": self.name, "extra_name_backwards": self.name[::-1]}
 
 
 class ModelWithSerializerMixin:
@@ -73,6 +67,7 @@ def plain_obj():
 def obj_with_attr():
     class ModelWithAttr(ModelWithAttrMixin, PlainExampleModel):
         pass
+
     return ModelWithAttr()
 
 
@@ -80,13 +75,17 @@ def obj_with_attr():
 def obj_with_method():
     class ModelWithMethod(ModelWithMethodMixin, PlainExampleModel):
         pass
+
     return ModelWithMethod()
 
 
 @pytest.fixture
 def obj_with_method_and_attr():
-    class ModelWithMethodAndAttr(ModelWithMethodMixin, ModelWithAttrMixin, PlainExampleModel):
+    class ModelWithMethodAndAttr(
+        ModelWithMethodMixin, ModelWithAttrMixin, PlainExampleModel
+    ):
         pass
+
     return ModelWithMethodAndAttr()
 
 
@@ -94,6 +93,7 @@ def obj_with_method_and_attr():
 def obj_with_serializer():
     class ModelWithSerializer(ModelWithSerializerMixin, PlainExampleModel):
         pass
+
     return ModelWithSerializer()
 
 
@@ -101,11 +101,15 @@ def obj_with_serializer():
 def obj_with_data():
     class ModelWithData(ModelWithDataMixin, PlainExampleModel):
         pass
+
     return ModelWithData()
 
 
 @pytest.fixture
 def obj_with_serializer_and_data():
-    class ModelWithSerializerAndData(ModelWithSerializerMixin, ModelWithDataMixin, PlainExampleModel):
+    class ModelWithSerializerAndData(
+        ModelWithSerializerMixin, ModelWithDataMixin, PlainExampleModel
+    ):
         pass
+
     return ModelWithSerializerAndData()
