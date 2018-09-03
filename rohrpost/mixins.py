@@ -1,19 +1,8 @@
 import json
 
-from .message import TolerantJSONEncoder, build_message
+from django.db.transaction import on_commit as on_transaction_commit
 
-try:
-    from channels import Group
-except ImportError:
-    Group = None
-    print("Channels is not installed, running in test mode!")
-
-try:
-    from django.db.transaction import on_commit as on_transaction_commit
-except ImportError:
-
-    def on_transaction_commit(func):
-        func()
+from .message import TolerantJSONEncoder, build_message, send_to_group
 
 
 class NotifyBase:
@@ -61,16 +50,16 @@ class NotifyBase:
             if not set(updated_fields) & set(message_data["object"].keys()):
                 return
 
-        payload = {
-            "text": json.dumps(
-                build_message(
-                    generate_id=True, handler="subscription-update", data=message_data
-                ),
-                cls=self.encoder,
-            )
-        }
+        payload = json.dumps(
+            build_message(
+                generate_id=True, handler="subscription-update", data=message_data
+            ),
+            cls=self.encoder,
+        )
 
-        on_transaction_commit(lambda: Group(group_name).send(payload))
+        on_transaction_commit(
+            lambda: send_to_group(group_name=group_name, message=payload)
+        )
 
 
 class NotifyOnCreate(NotifyBase):

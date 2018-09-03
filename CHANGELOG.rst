@@ -5,6 +5,15 @@ Changelog
 ------------------
 
 - **Breaking:** Utility functions no longer accept ``**additional_data``
+- **Breaking:** Utility functions that previously required a kwargs ``message``
+  require now a kwarg ``consumer`` which should be an instance of
+  ``channels.generic.websocket.WebsocketConsumer``.  The type is not enforced.
+- **Breaking:** The minimal required Python release is 3.5.
+- **Breaking:** rohrpost has now an explicit dependency on Channels >= 2.
+  Since we do not know of any alternatives, we removed this possible
+  abstraction.  Feel free to open an issue if this is a problem.
+- A ``rohrpost.sync_consumer.SyncRohrpostConsumer`` was added.  It includes
+  convenience methods to add/remove a client to/from a group.
 
 1.1.0
 -----

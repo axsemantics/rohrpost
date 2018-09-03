@@ -4,17 +4,19 @@ from collections import defaultdict
 LOGGED_DATA = defaultdict(list)
 
 
-class MockGroup:
-    def __init__(self, name):
-        self.name = name
+def mocked_send_to_group(*, group_name, message):
+    LOGGED_DATA[group_name].append(json.loads(message))
 
-    def send(self, message_dict):
-        global LOGGED_DATA
-        LOGGED_DATA[self.name].append(json.loads(message_dict["text"]))
+
+def mocked_transaction_commit(func):
+    func()
 
 
 def test_without_name(plain_obj, monkeypatch):
-    monkeypatch.setattr("rohrpost.mixins.Group", MockGroup)
+    monkeypatch.setattr("rohrpost.mixins.send_to_group", mocked_send_to_group)
+    monkeypatch.setattr(
+        "rohrpost.mixins.on_transaction_commit", mocked_transaction_commit
+    )
 
     # create
     plain_obj.save()
@@ -40,7 +42,10 @@ def test_without_name(plain_obj, monkeypatch):
 
 
 def test_send_update_fields(plain_obj, monkeypatch):
-    monkeypatch.setattr("rohrpost.mixins.Group", MockGroup)
+    monkeypatch.setattr("rohrpost.mixins.send_to_group", mocked_send_to_group)
+    monkeypatch.setattr(
+        "rohrpost.mixins.on_transaction_commit", mocked_transaction_commit
+    )
 
     # create
     plain_obj.save()
@@ -75,7 +80,10 @@ def test_send_update_fields(plain_obj, monkeypatch):
 
 
 def test_with_attribute_name(obj_with_attr, monkeypatch):
-    monkeypatch.setattr("rohrpost.mixins.Group", MockGroup)
+    monkeypatch.setattr("rohrpost.mixins.send_to_group", mocked_send_to_group)
+    monkeypatch.setattr(
+        "rohrpost.mixins.on_transaction_commit", mocked_transaction_commit
+    )
 
     # create
     obj_with_attr.save()
@@ -101,7 +109,10 @@ def test_with_attribute_name(obj_with_attr, monkeypatch):
 
 
 def test_with_method_name(obj_with_method, monkeypatch):
-    monkeypatch.setattr("rohrpost.mixins.Group", MockGroup)
+    monkeypatch.setattr("rohrpost.mixins.send_to_group", mocked_send_to_group)
+    monkeypatch.setattr(
+        "rohrpost.mixins.on_transaction_commit", mocked_transaction_commit
+    )
 
     # create
     obj_with_method.save()
@@ -127,7 +138,10 @@ def test_with_method_name(obj_with_method, monkeypatch):
 
 
 def test_with_method_and_attr(obj_with_method_and_attr, monkeypatch):
-    monkeypatch.setattr("rohrpost.mixins.Group", MockGroup)
+    monkeypatch.setattr("rohrpost.mixins.send_to_group", mocked_send_to_group)
+    monkeypatch.setattr(
+        "rohrpost.mixins.on_transaction_commit", mocked_transaction_commit
+    )
 
     # create
     obj_with_method_and_attr.save()
@@ -153,7 +167,10 @@ def test_with_method_and_attr(obj_with_method_and_attr, monkeypatch):
 
 
 def test_with_additional_data(obj_with_data, monkeypatch):
-    monkeypatch.setattr("rohrpost.mixins.Group", MockGroup)
+    monkeypatch.setattr("rohrpost.mixins.send_to_group", mocked_send_to_group)
+    monkeypatch.setattr(
+        "rohrpost.mixins.on_transaction_commit", mocked_transaction_commit
+    )
 
     # create
     obj_with_data.save()
@@ -191,7 +208,10 @@ def test_with_additional_data(obj_with_data, monkeypatch):
 
 
 def test_with_serializer(obj_with_serializer, monkeypatch):
-    monkeypatch.setattr("rohrpost.mixins.Group", MockGroup)
+    monkeypatch.setattr("rohrpost.mixins.send_to_group", mocked_send_to_group)
+    monkeypatch.setattr(
+        "rohrpost.mixins.on_transaction_commit", mocked_transaction_commit
+    )
 
     # create
     obj_with_serializer.save()
@@ -238,7 +258,10 @@ def test_with_serializer(obj_with_serializer, monkeypatch):
 
 
 def test_with_serializer_and_data(obj_with_serializer_and_data, monkeypatch):
-    monkeypatch.setattr("rohrpost.mixins.Group", MockGroup)
+    monkeypatch.setattr("rohrpost.mixins.send_to_group", mocked_send_to_group)
+    monkeypatch.setattr(
+        "rohrpost.mixins.on_transaction_commit", mocked_transaction_commit
+    )
 
     # create
     obj_with_serializer_and_data.save()

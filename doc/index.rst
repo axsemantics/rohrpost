@@ -15,9 +15,8 @@ any user updates, deletes, or creates an object.
 Protocol
 --------
 
-The rohrpost protocol sits on top of channels_ inside the ``text`` component of
-a channels message. rohrpost expects this ``text`` component to be valid JSON
-with
+The rohrpost protocol sits on top of channels_. rohrpost expects the messages
+to be valid JSON with
 
 - An ``id`` field that rohrpost sends back in the response.
 - A ``type`` field that contains a string defining the message type (and hence,
@@ -54,27 +53,27 @@ Installation
 
 From the command line::
 
-    pip install https://github.com/user/repository/archive/branch.zip
+    pip install rohrpost
 
 Or add this line to your `requirements.txt`::
 
-    https://github.com/user/repository/archive/branch.zip
+    rohrpost==2.x
 
 
 Routing
 -------
 
-Once you have installed `rohrpost`, you'll need to add the main `rohrpost`
-handler to your `routing.py`. You can find details on this in Channels'
-`routing documentation`_.
+Once you have installed `rohrpost`, you'll need to add a `rohrpost` consumer
+to your `routing.py`. You can find details on this in Channels' `routing
+documentation`_.
 
 .. code:: Python
 
-    from channels import route
-    from rohrpost.main import handle_rohrpost_message
+    from django.urls import path
+    from rohrpost.sync_consumer import SyncRohrpostConsumer
 
-    channel_routing = [
-        route('websocket.receive', handle_rohrpost_message, path=r'/rohrpost/$'),
+    websocket_urlpatterns = [
+        path('ws/rohrpost/', SyncRohrpostConsumer),
     ]
 
 
@@ -87,20 +86,18 @@ how the ping method works, that rohrpost provides out of the box:
 
 .. code-block:: python
 
-   from rohrpost.message import send_message
-   from rohrpost.registry import rohrpost_handler
+    from rohrpost.message import send_message
+    from rohrpost.registry import rohrpost_handler
 
 
-   @rohrpost_handler('ping')
-   def handle_ping(message, request):
-    response_kwargs = {
-        'message': message,
-        'message_id': request['id'],
-        'handler': 'pong'
-    }
-    if 'data' in request:
-        response_kwargs['data'] = request['data']
-    send_message(**response_kwargs)
+    @rohrpost_handler('ping')
+    def handle_ping(consumer, request):
+        send_message(
+            consumer=consumer,
+            message_id=request["id"],
+            handler="pong",
+            data=request.get("data"),
+        )
 
 Using the mixins
 ----------------
@@ -149,12 +146,13 @@ standard handler for this.
 Utility functions
 -----------------
 
-rohrpost provides three main helper functions for message sending in
+rohrpost provides a few helper functions for message sending in
 ``rohrpost.message``:
 
 - ``rohrpost.message.send_message``
 
-  - ``message``: The original message you are replying to (**required**).
+  - ``consumer``: An instance of ``channels.generic.websocket.WebsocketConsumer``
+    that represents the client the message is sent to (**required**).
   - ``handler``: The string identifying your handler (**required**).
   - ``message_id``: The message ID (any simple datatype allowed). If you do not
     provide any, an integer will be randomly chosen.
@@ -166,6 +164,39 @@ rohrpost provides three main helper functions for message sending in
 - ``rohrpost.message.send_error`` sends an error message explicitly, takes the
   same arguments as ``send_message``.
 
+- ``rohrpost.messages.send_to_group`` sends a message to a specific group.
+
+
+Migrating from rohrpost v1
+--------------------------
+
+- Follow `migration guide`_ from Channels 1 to Channels 2.
+
+- Adjust the routing in your application.  What was before
+
+    channel_routing = [
+        route('websocket.receive', handle_rohrpost_message, path=r'^/ws/rohrpost/$'),
+    ]
+
+  should now be
+
+    websocket_urlpatterns = [
+        path('ws/rohrpost/', SyncRohrpostConsumer),
+    ]
+
+- Your handlers will no longer receive ``message`` as a first argument, but an
+  instance of ``channels.generic.websocket.WebsocketConsumer``.  You can pass
+  it directly to the utility functions as before with ``message``.
+
+- To add clients to a group, change ``Group(group_name).add(message.reply_channel)``
+  to ``consumer.add_to_group(group_name)`` when using
+  ``rohrpost.sync_consumer.SyncRohrpostConsumer``.  Otherwise we recommend to
+  check out our consumer's implementation and read about `Groups in Channels 2`._
+
+- To send messages to a group you can use the new utility function
+  ``rohrpost.messages.send_to_group``.
+
+
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
@@ -173,4 +204,6 @@ rohrpost provides three main helper functions for message sending in
 .. _channels: https://github.com/django/channels
 .. _Django's: http://djangoproject.com/
 .. _rohrpost.js: https://github.com/axsemantics/rohrpost-js
-.. _routing documentation: http://channels.readthedocs.io/en/latest/routing.html
+.. _routing documentation: https://channels.readthedocs.io/en/latest/topics/routing.html
+.. _channels one-to-two: https://channels.readthedocs.io/en/latest/one-to-two.html
+.. _Groups in Channels 2: https://channels.readthedocs.io/en/latest/topics/channel_layers.html#groups
