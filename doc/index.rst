@@ -127,6 +127,8 @@ When using these mixins, you'll need to set some fields or fill in some methods:
 
 The message will look like this::
 
+.. code-block:: JSON
+
     {
         "id": <some id>,
         "type": "subscription-update",
@@ -169,19 +171,23 @@ rohrpost provides a few helper functions for message sending in
 Migrating from rohrpost v1
 --------------------------
 
-- Follow `migration guide`_ from Channels 1 to Channels 2.
+- Follow the `migration guide`_ from Channels 1 to 2.
 
 - Adjust the routing in your application.  What was before
 
-    channel_routing = [
-        route('websocket.receive', handle_rohrpost_message, path=r'^/ws/rohrpost/$'),
-    ]
+  .. code:: Python
+
+      channel_routing = [
+          route('websocket.receive', handle_rohrpost_message, path=r'^/ws/rohrpost/$'),
+      ]
 
   should now be
 
-    websocket_urlpatterns = [
-        path('ws/rohrpost/', SyncRohrpostConsumer),
-    ]
+  .. code:: Python
+
+      websocket_urlpatterns = [
+          path('ws/rohrpost/', SyncRohrpostConsumer),
+      ]
 
 - Your handlers will no longer receive ``message`` as a first argument, but an
   instance of ``channels.generic.websocket.WebsocketConsumer``.  You can pass
@@ -207,5 +213,5 @@ Migrating from rohrpost v1
 .. _Django's: http://djangoproject.com/
 .. _rohrpost.js: https://github.com/axsemantics/rohrpost-js
 .. _routing documentation: https://channels.readthedocs.io/en/latest/topics/routing.html
-.. _channels one-to-two: https://channels.readthedocs.io/en/latest/one-to-two.html
+.. _migration guide: https://channels.readthedocs.io/en/latest/one-to-two.html
 .. _Groups in Channels 2: https://channels.readthedocs.io/en/latest/topics/channel_layers.html#groups
