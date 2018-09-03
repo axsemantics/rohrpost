@@ -156,7 +156,6 @@ rohrpost provides a few helper functions for message sending in
   - ``handler``: The string identifying your handler (**required**).
   - ``message_id``: The message ID (any simple datatype allowed). If you do not
     provide any, an integer will be randomly chosen.
-  - ``close``: Set to ``True`` if you want to close the connection.
   - ``error``: Include an error message or error content
   - ``data``: A dict that will appear in the message as ``data`` (converted to
     a JSON object).
@@ -195,6 +194,9 @@ Migrating from rohrpost v1
 
 - To send messages to a group you can use the new utility function
   ``rohrpost.messages.send_to_group``.
+
+- You can no longer pass ``close`` to the utility functions.  Instead call
+  ``consumer.close()`` after sending a message to close the connection.
 
 
 .. toctree::
