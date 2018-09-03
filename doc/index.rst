@@ -15,9 +15,8 @@ any user updates, deletes, or creates an object.
 Protocol
 --------
 
-The rohrpost protocol sits on top of channels_ inside the ``text`` component of
-a channels message. rohrpost expects this ``text`` component to be valid JSON
-with
+The rohrpost protocol sits on top of channels_. rohrpost expects the messages
+to be valid JSON with
 
 - An ``id`` field that rohrpost sends back in the response.
 - A ``type`` field that contains a string defining the message type (and hence,
@@ -54,27 +53,27 @@ Installation
 
 From the command line::
 
-    pip install https://github.com/user/repository/archive/branch.zip
+    pip install rohrpost
 
 Or add this line to your `requirements.txt`::
 
-    https://github.com/user/repository/archive/branch.zip
+    rohrpost==2.x
 
 
 Routing
 -------
 
-Once you have installed `rohrpost`, you'll need to add the main `rohrpost`
-handler to your `routing.py`. You can find details on this in Channels'
-`routing documentation`_.
+Once you have installed `rohrpost`, you'll need to add a `rohrpost` consumer
+to your `routing.py`. You can find details on this in Channels' `routing
+documentation`_.
 
 .. code:: Python
 
-    from channels import route
-    from rohrpost.main import handle_rohrpost_message
+    from django.urls import path
+    from rohrpost.sync_consumer import SyncRohrpostConsumer
 
-    channel_routing = [
-        route('websocket.receive', handle_rohrpost_message, path=r'/rohrpost/$'),
+    websocket_urlpatterns = [
+        path('ws/rohrpost/', SyncRohrpostConsumer),
     ]
 
 
@@ -173,4 +172,4 @@ rohrpost provides three main helper functions for message sending in
 .. _channels: https://github.com/django/channels
 .. _Django's: http://djangoproject.com/
 .. _rohrpost.js: https://github.com/axsemantics/rohrpost-js
-.. _routing documentation: http://channels.readthedocs.io/en/latest/routing.html
+.. _routing documentation: https://channels.readthedocs.io/en/latest/topics/routing.html
