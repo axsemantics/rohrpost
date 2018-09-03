@@ -1,6 +1,8 @@
 import json
 from functools import partial
 
+from channels.generic.websocket import WebsocketConsumer
+
 from . import handlers
 from .message import send_error
 from .registry import HANDLERS
@@ -16,7 +18,7 @@ except AttributeError:
     DECODE_ERRORS = (ValueError, TypeError)
 
 
-def handle_rohrpost_message(consumer, text_data: str) -> None:
+def handle_rohrpost_message(consumer: WebsocketConsumer, text_data: str) -> None:
     """
     Handling of a rohrpost message will validate the required format:
     A valid JSON object including at least an "id" and "type" field.

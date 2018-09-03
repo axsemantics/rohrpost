@@ -1,4 +1,5 @@
 black==18.6b4; python_version>="3.6"
+channels>=2.0
 isort==4.3.*
 pylava==0.1.*
 pytest==3.7.*

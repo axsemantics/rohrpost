@@ -2,15 +2,9 @@ import json
 import random
 from decimal import Decimal
 
-try:
-    from asgiref.sync import async_to_sync
-    from channels.layers import get_channel_layer
-
-    channel_layer = get_channel_layer()
-
-except ImportError:
-    print("Channels is not installed, running in test mode!")
-    async_to_sync = None
+from asgiref.sync import async_to_sync
+from channels.generic.websocket import WebsocketConsumer
+from channels.layers import get_channel_layer
 
 
 class TolerantJSONEncoder(json.JSONEncoder):
@@ -31,10 +25,10 @@ def send_to_group(group_name, message) -> None:
     """
     if async_to_sync is None:
         return
-    async_to_sync(channel_layer.send)(group_name, message)
+    async_to_sync(get_channel_layer().send)(group_name, message)
 
 
-def _send_message(*, consumer, content: dict, close: bool):
+def _send_message(*, consumer: WebsocketConsumer, content: dict, close: bool):
     consumer.send(json.dumps(content, cls=TolerantJSONEncoder))
     if close is True:
         consumer.close()
@@ -59,7 +53,13 @@ def build_message(
 
 
 def send_message(
-    *, consumer, handler, message_id=None, close=False, error=None, data: dict = None
+    *,
+    consumer: WebsocketConsumer,
+    handler,
+    message_id=None,
+    close=False,
+    error=None,
+    data: dict = None
 ):
     content = build_message(
         handler=handler, message_id=message_id, error=error, data=data
@@ -70,7 +70,9 @@ def send_message(
     _send_message(consumer=consumer, content=content, close=close)
 
 
-def send_success(*, consumer, handler, message_id, close=False, data: dict = None):
+def send_success(
+    *, consumer: WebsocketConsumer, handler, message_id, close=False, data: dict = None
+):
     """
     This method directly wraps send_message but checks the existence of id and type.
     """
@@ -88,7 +90,15 @@ def send_success(*, consumer, handler, message_id, close=False, data: dict = Non
     )
 
 
-def send_error(*, consumer, handler, message_id, error, close=False, data: dict = None):
+def send_error(
+    *,
+    consumer: WebsocketConsumer,
+    handler,
+    message_id,
+    error,
+    close=False,
+    data: dict = None
+):
     """
     This method wraps send_message and makes sure that error is a keyword argument.
     """

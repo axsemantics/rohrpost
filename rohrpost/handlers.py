@@ -1,9 +1,11 @@
+from channels.generic.websocket import WebsocketConsumer
+
 from rohrpost.message import send_message
 from rohrpost.registry import rohrpost_handler
 
 
 @rohrpost_handler("ping")
-def handle_ping(consumer, request):
+def handle_ping(consumer: WebsocketConsumer, request):
     """
     Handles requests of this format ("data" being an optional attribute):
     {
