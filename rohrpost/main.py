@@ -23,7 +23,7 @@ def handle_rohrpost_message(consumer: WebsocketConsumer, text_data: str) -> None
         return _send_error(error="Received empty message.")
 
     try:
-        request: dict = json.loads(text_data)
+        request = json.loads(text_data)  # type: dict
     except (json.JSONDecodeError, TypeError) as e:
         return _send_error(
             error="Could not decode JSON message. Error: {}".format(str(e))

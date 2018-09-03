@@ -1,6 +1,6 @@
-from typing import Callable, Dict, List, Union
+from typing import Callable, Dict, List, Union  # noqa
 
-HANDLERS: Dict[str, Callable] = dict()
+HANDLERS = dict()  # type: Dict[str, Callable]
 
 
 def _rohrpost_handler(func: Callable, name: Union[str, List[str]]) -> Callable:
