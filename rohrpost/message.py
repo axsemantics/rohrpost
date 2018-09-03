@@ -1,6 +1,7 @@
 import json
 import random
 from decimal import Decimal
+from typing import Union
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
@@ -18,14 +19,16 @@ class TolerantJSONEncoder(json.JSONEncoder):
         return json.JSONDecoder.default(self, obj)
 
 
-def send_to_group(group_name: str, message: str) -> None:
+def send_to_group(group_name: str, message: Union[str, dict]) -> None:
     """Send a message to a group.
 
     This requires the group to be exist on the default channel layer.
     """
     if async_to_sync is None:
         return
-    async_to_sync(get_channel_layer().send)(group_name, message)
+    async_to_sync(get_channel_layer().send)(
+        group_name, {"type": "rohrpost.message", "message": message}
+    )
 
 
 def _send_message(*, consumer: WebsocketConsumer, content: dict) -> None:

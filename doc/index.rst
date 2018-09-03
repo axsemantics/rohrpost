@@ -76,6 +76,11 @@ documentation`_.
         path('ws/rohrpost/', SyncRohrpostConsumer),
     ]
 
+If you use your own consumer implementation, make sure to a method
+``rohrpost_message`` that handles messages sent over a channel layer to be
+broadcast to all members of the group.  Further information is available in
+Channels documentation on `Channel layers`_.
+
 
 Adding Handlers
 ---------------
@@ -213,5 +218,6 @@ Migrating from rohrpost v1
 .. _Django's: http://djangoproject.com/
 .. _rohrpost.js: https://github.com/axsemantics/rohrpost-js
 .. _routing documentation: https://channels.readthedocs.io/en/latest/topics/routing.html
+.. _Channel layers: https://channels.readthedocs.io/en/latest/topics/channel_layers.html#what-to-send-over-the-channel-layer
 .. _migration guide: https://channels.readthedocs.io/en/latest/one-to-two.html
 .. _Groups in Channels 2: https://channels.readthedocs.io/en/latest/topics/channel_layers.html#groups
