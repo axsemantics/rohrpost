@@ -17,7 +17,7 @@ setup(
     author="Tobias Kunze",
     author_email="tobias.kunze@ax-semantics.com",
     license="MIT",
-    python_requires=">=3.4",
+    python_requires=">=3.5",
     install_requires=["channels>=2.0"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -26,7 +26,6 @@ setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",

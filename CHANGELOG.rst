@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 - **Breaking:** Utility functions no longer accept ``**additional_data``
+- **Breaking:** The minimal required Python release is 3.5.
 - **Breaking:** rohrpost has now an explicit dependency on Channels >= 2.
   Since we do not know of any alternatives, we removed this possible
   abstraction.  Feel free to open an issue if this is a problem.

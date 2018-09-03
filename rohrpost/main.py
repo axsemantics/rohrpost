@@ -11,12 +11,6 @@ assert handlers  # silence qa
 
 REQUIRED_FIELDS = ["type", "id"]
 
-try:
-    DECODE_ERRORS = (json.JSONDecodeError, TypeError)  # type: tuple
-except AttributeError:
-    # Python 3.4 raises a ValueError instead of json.JSONDecodeError
-    DECODE_ERRORS = (ValueError, TypeError)
-
 
 def handle_rohrpost_message(consumer: WebsocketConsumer, text_data: str) -> None:
     """
@@ -30,7 +24,7 @@ def handle_rohrpost_message(consumer: WebsocketConsumer, text_data: str) -> None
 
     try:
         request = json.loads(text_data)
-    except DECODE_ERRORS as e:
+    except (json.JSONDecodeError, TypeError) as e:
         return _send_error(
             error="Could not decode JSON message. Error: {}".format(str(e))
         )
