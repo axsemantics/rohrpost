@@ -86,20 +86,18 @@ how the ping method works, that rohrpost provides out of the box:
 
 .. code-block:: python
 
-   from rohrpost.message import send_message
-   from rohrpost.registry import rohrpost_handler
+    from rohrpost.message import send_message
+    from rohrpost.registry import rohrpost_handler
 
 
-   @rohrpost_handler('ping')
-   def handle_ping(message, request):
-    response_kwargs = {
-        'message': message,
-        'message_id': request['id'],
-        'handler': 'pong'
-    }
-    if 'data' in request:
-        response_kwargs['data'] = request['data']
-    send_message(**response_kwargs)
+    @rohrpost_handler('ping')
+    def handle_ping(consumer, request):
+        send_message(
+            consumer=consumer,
+            message_id=request["id"],
+            handler="pong",
+            data=request.get("data"),
+        )
 
 Using the mixins
 ----------------
@@ -153,7 +151,8 @@ rohrpost provides a few helper functions for message sending in
 
 - ``rohrpost.message.send_message``
 
-  - ``message``: The original message you are replying to (**required**).
+  - ``consumer``: An instance of ``channels.generic.websocket.WebsocketConsumer``
+    that represents the client the message is sent to (**required**).
   - ``handler``: The string identifying your handler (**required**).
   - ``message_id``: The message ID (any simple datatype allowed). If you do not
     provide any, an integer will be randomly chosen.
