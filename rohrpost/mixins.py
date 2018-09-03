@@ -1,13 +1,8 @@
 import json
 
+from django.db.transaction import on_commit as on_transaction_commit
+
 from .message import TolerantJSONEncoder, build_message, send_to_group
-
-try:
-    from django.db.transaction import on_commit as on_transaction_commit
-except ImportError:
-
-    def on_transaction_commit(func):
-        func()
 
 
 class NotifyBase:
