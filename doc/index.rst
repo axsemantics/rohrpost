@@ -148,7 +148,7 @@ standard handler for this.
 Utility functions
 -----------------
 
-rohrpost provides three main helper functions for message sending in
+rohrpost provides a few helper functions for message sending in
 ``rohrpost.message``:
 
 - ``rohrpost.message.send_message``
@@ -164,6 +164,9 @@ rohrpost provides three main helper functions for message sending in
 
 - ``rohrpost.message.send_error`` sends an error message explicitly, takes the
   same arguments as ``send_message``.
+
+- ``rohrpost.messages.send_to_group`` sends a message to a specific group.
+
 
 .. toctree::
    :maxdepth: 1

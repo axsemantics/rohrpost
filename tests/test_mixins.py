@@ -4,8 +4,8 @@ from collections import defaultdict
 LOGGED_DATA = defaultdict(list)
 
 
-def mocked_send_to_group(group_name, payload):
-    LOGGED_DATA[group_name].append(json.loads(payload))
+def mocked_send_to_group(*, group_name, message):
+    LOGGED_DATA[group_name].append(json.loads(message))
 
 
 def test_without_name(plain_obj, monkeypatch):

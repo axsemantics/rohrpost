@@ -2,6 +2,16 @@ import json
 import random
 from decimal import Decimal
 
+try:
+    from asgiref.sync import async_to_sync
+    from channels.layers import get_channel_layer
+
+    channel_layer = get_channel_layer()
+
+except ImportError:
+    print("Channels is not installed, running in test mode!")
+    async_to_sync = None
+
 
 class TolerantJSONEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -12,6 +22,16 @@ class TolerantJSONEncoder(json.JSONEncoder):
         if isinstance(obj, Decimal):
             return int(obj) if int(obj) == obj else float(obj)
         return json.JSONDecoder.default(self, obj)
+
+
+def send_to_group(group_name, message) -> None:
+    """Send a message to a group.
+
+    This requires the group to be exist on the default channel layer.
+    """
+    if async_to_sync is None:
+        return
+    async_to_sync(channel_layer.send)(group_name, message)
 
 
 def _send_message(*, consumer, content: dict, close: bool):

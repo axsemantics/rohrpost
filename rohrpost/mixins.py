@@ -1,16 +1,6 @@
 import json
 
-from .message import TolerantJSONEncoder, build_message
-
-try:
-    from asgiref.sync import async_to_sync
-    from channels.layers import get_channel_layer
-
-    channel_layer = get_channel_layer()
-
-except ImportError:
-    print("Channels is not installed, running in test mode!")
-    async_to_sync = None
+from .message import TolerantJSONEncoder, build_message, send_to_group
 
 try:
     from django.db.transaction import on_commit as on_transaction_commit
@@ -18,12 +8,6 @@ except ImportError:
 
     def on_transaction_commit(func):
         func()
-
-
-def send_to_group(group_name, payload) -> None:
-    if async_to_sync is None:
-        return
-    async_to_sync(channel_layer.send)(group_name, payload)
 
 
 class NotifyBase:
@@ -78,7 +62,9 @@ class NotifyBase:
             cls=self.encoder,
         )
 
-        on_transaction_commit(lambda: send_to_group(group_name, payload))
+        on_transaction_commit(
+            lambda: send_to_group(group_name=group_name, message=payload)
+        )
 
 
 class NotifyOnCreate(NotifyBase):
