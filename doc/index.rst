@@ -168,6 +168,36 @@ rohrpost provides a few helper functions for message sending in
 - ``rohrpost.messages.send_to_group`` sends a message to a specific group.
 
 
+Migrating from rohrpost v1
+--------------------------
+
+- Follow `migration guide`_ from Channels 1 to Channels 2.
+
+- Adjust the routing in your application.  What was before
+
+    channel_routing = [
+        route('websocket.receive', handle_rohrpost_message, path=r'^/ws/rohrpost/$'),
+    ]
+
+  should now be
+
+    websocket_urlpatterns = [
+        path('ws/rohrpost/', SyncRohrpostConsumer),
+    ]
+
+- Your handlers will no longer receive ``message`` as a first argument, but an
+  instance of ``channels.generic.websocket.WebsocketConsumer``.  You can pass
+  it directly to the utility functions as before with ``message``.
+
+- To add clients to a group, change ``Group(group_name).add(message.reply_channel)``
+  to ``consumer.add_to_group(group_name)`` when using
+  ``rohrpost.sync_consumer.SyncRohrpostConsumer``.  Otherwise we recommend to
+  check out our consumer's implementation and read about `Groups in Channels 2`._
+
+- To send messages to a group you can use the new utility function
+  ``rohrpost.messages.send_to_group``.
+
+
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
@@ -176,3 +206,5 @@ rohrpost provides a few helper functions for message sending in
 .. _Django's: http://djangoproject.com/
 .. _rohrpost.js: https://github.com/axsemantics/rohrpost-js
 .. _routing documentation: https://channels.readthedocs.io/en/latest/topics/routing.html
+.. _channels one-to-two: https://channels.readthedocs.io/en/latest/one-to-two.html
+.. _Groups in Channels 2: https://channels.readthedocs.io/en/latest/topics/channel_layers.html#groups
