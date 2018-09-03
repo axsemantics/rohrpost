@@ -5,7 +5,7 @@ from rohrpost.registry import rohrpost_handler
 
 
 @rohrpost_handler("ping")
-def handle_ping(consumer: WebsocketConsumer, request):
+def handle_ping(consumer: WebsocketConsumer, request: dict) -> None:
     """
     Handles requests of this format ("data" being an optional attribute):
     {

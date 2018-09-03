@@ -18,7 +18,7 @@ class TolerantJSONEncoder(json.JSONEncoder):
         return json.JSONDecoder.default(self, obj)
 
 
-def send_to_group(group_name, message) -> None:
+def send_to_group(group_name: str, message: str) -> None:
     """Send a message to a group.
 
     This requires the group to be exist on the default channel layer.
@@ -28,13 +28,18 @@ def send_to_group(group_name, message) -> None:
     async_to_sync(get_channel_layer().send)(group_name, message)
 
 
-def _send_message(*, consumer: WebsocketConsumer, content: dict):
+def _send_message(*, consumer: WebsocketConsumer, content: dict) -> None:
     consumer.send(json.dumps(content, cls=TolerantJSONEncoder))
 
 
 def build_message(
-    *, handler, message_id=None, error=None, generate_id=False, data: dict = None
-):
+    *,
+    handler: str,
+    message_id=None,
+    error=None,
+    generate_id: bool = False,
+    data: dict = None
+) -> dict:
     content = dict()
     if message_id:
         content["id"] = message_id
@@ -53,11 +58,11 @@ def build_message(
 def send_message(
     *,
     consumer: WebsocketConsumer,
-    handler,
+    handler: str,
     message_id=None,
     error=None,
     data: dict = None
-):
+) -> None:
     content = build_message(
         handler=handler, message_id=message_id, error=error, data=data
     )
@@ -68,8 +73,8 @@ def send_message(
 
 
 def send_success(
-    *, consumer: WebsocketConsumer, handler, message_id, data: dict = None
-):
+    *, consumer: WebsocketConsumer, handler: str, message_id, data: dict = None
+) -> None:
     """
     This method directly wraps send_message but checks the existence of id and type.
     """
@@ -82,8 +87,8 @@ def send_success(
 
 
 def send_error(
-    *, consumer: WebsocketConsumer, handler, message_id, error, data: dict = None
-):
+    *, consumer: WebsocketConsumer, handler: str, message_id, error, data: dict = None
+) -> None:
     """
     This method wraps send_message and makes sure that error is a keyword argument.
     """

@@ -1,4 +1,5 @@
 import json
+from typing import Any
 
 from django.db.transaction import on_commit as on_transaction_commit
 
@@ -8,7 +9,7 @@ from .message import TolerantJSONEncoder, build_message, send_to_group
 class NotifyBase:
     encoder = TolerantJSONEncoder
 
-    def _get_group_name(self, message_type=""):
+    def _get_group_name(self, message_type: str = "") -> str:
         if hasattr(self, "get_group_name"):
             return self.get_group_name(message_type=message_type)
         if hasattr(self, "group_name"):
@@ -17,7 +18,7 @@ class NotifyBase:
             class_name=self.__class__.__name__.lower(), pk=self.pk
         )
 
-    def _get_push_data(self, updated_fields=None, message_type=None):
+    def _get_push_data(self, updated_fields=None, message_type: str = None) -> dict:
         if hasattr(self, "get_push_notification_data"):
             obj_data = self.get_push_notification_data(
                 updated_fields=updated_fields, message_type=message_type
@@ -28,27 +29,34 @@ class NotifyBase:
             obj_data = {"id": self.pk}
         return obj_data
 
-    def _get_message_type(self, message_type):
+    def _get_message_type(self, message_type: str) -> str:
         return message_type
 
     def _send_notify(
-        self, message_type, updated_fields=None, data=None, always_send=True
-    ):
+        self,
+        message_type: str,
+        updated_fields=None,
+        data: dict = None,
+        always_send: bool = True,
+    ) -> None:
         group_name = self._get_group_name(message_type=message_type)
+
+        message_object = data or self._get_push_data(
+            updated_fields=updated_fields, message_type=message_type
+        )
+
+        if updated_fields and "updated_fields" not in message_object:
+            message_object["updated_fields"] = updated_fields
+
+        if message_type == "update" and updated_fields and always_send is False:
+            if not set(updated_fields) & set(message_object.keys()):
+                return
+
         message_data = {
             "group": group_name,
             "type": self._get_message_type(message_type),
-            "object": data
-            or self._get_push_data(
-                updated_fields=updated_fields, message_type=message_type
-            ),
+            "object": message_object,
         }
-        if updated_fields and "updated_fields" not in message_data["object"]:
-            message_data["object"]["updated_fields"] = updated_fields
-
-        if message_type == "update" and updated_fields and always_send is False:
-            if not set(updated_fields) & set(message_data["object"].keys()):
-                return
 
         payload = json.dumps(
             build_message(
