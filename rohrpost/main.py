@@ -3,11 +3,9 @@ from functools import partial
 
 from channels.generic.websocket import WebsocketConsumer
 
-from . import handlers
+from . import handlers  # noqa
 from .message import send_error
 from .registry import HANDLERS
-
-assert handlers  # silence qa
 
 REQUIRED_FIELDS = ["type", "id"]
 
