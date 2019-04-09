@@ -36,7 +36,7 @@ From the command line::
 
 Or add this line to your `requirements.txt`::
 
-    rohrpost==1.x
+    rohrpost==2.x
 
 Development
 -----------
