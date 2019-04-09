@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.0.0 (unreleased)
-------------------
+2.0.0
+-----
 
 - **Breaking:** Utility functions no longer accept ``**additional_data``
 - **Breaking:** Utility functions that previously required a kwargs ``message``
