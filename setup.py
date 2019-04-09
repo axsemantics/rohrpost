@@ -32,4 +32,9 @@ setup(
         "Topic :: Internet :: WWW/HTTP",
     ],
     packages=["rohrpost"],
+    project_urls={
+        "Documentation": "https://rohrpost.readthedocs.io/en/stable/",
+        "Source": "https://github.com/axsemantics/rohrpost",
+        "Tracker": "https://github.com/axsemantics/rohrpost/issues",
+    },
 )
