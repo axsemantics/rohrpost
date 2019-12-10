@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.0.1
+-----
+
+- Make support for Python 3.8 official.
+
 2.0.0
 -----
 
