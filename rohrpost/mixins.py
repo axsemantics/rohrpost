@@ -80,8 +80,8 @@ class NotifyOnCreate(NotifyBase):
 
 class NotifyOnUpdate(NotifyBase):
     rohrpost_always_send = (
-        True
-    )  # Toggle if even data not reflecting upldate_fields should be sent
+        True  # Toggle if even data not reflecting update_fields should be sent
+    )
 
     def save(self, *args, **kwargs):
         initial_pk = self.pk
