@@ -35,6 +35,7 @@ jobs:
       after_success: true
 
     - stage: release
+      python: "3.8"
       script: skip
       before_deploy: ./check_version.sh
       deploy:
@@ -43,7 +44,6 @@ jobs:
         on:
           repo: axsemantics/rohrpost
           tags: true
-          python: 3.6
         distributions: sdist bdist_wheel
         password:
           secure: LzdFj1FLt6I1C9/ZmGZgkSkitAb3SwZMeygTaiapsEacLiPSLdvVe8Cw6pERKqy2uh3lNi6GaTwAvPKFK4dKzNyG8xzMNW9MheD7joyHlhTy9XLCV8FXQdXUQYK/zIAkLKHVxfcZYo3eeT/LL25rXuJYT2vVwIEVrYX2WfoDQAGH3f/VK5fUmW1uC3Voz1ey48WfruZYQv3NDy4rXRgopNvl3AIbAhpCj7RvWFdp28ABDiUlUzlJx7PWizg2bN8kPdSDxdIDFvrKqLgpv+ni9PQ2MPs+v8gI1wChBXFbVIsrCSZ6xZBKECGWvBVpQiUte1MoJDvxPOg3jPb5kMX2vqSoo22Uf542Owr+VZlfAEkc5oY7mSeEPFk7j3uQzS8cVOlGi5zzJfs1zr2r0YxlkOnvTde3gkmCgefJMUMLZPew3c5x7ecEFs41y7EYmnoeTWCx1N6vC17rC0RKqbSJT9002Ex2LqZ8tgxrORJ4fCajFMGF61mtGBAjc2yXDWBp2/HA8IfSZ3mkJf8rzXZz68VvIaPQylqvbXXusuikYpYZEgX3DTPDbpYx2kB7svAbzAloQvylbE98TAcx1m1KYS2YganlIs4BcAwTXgyMsCfbe5kzEDnr8XC1lbE/dilY+CXeLgN19fWCNTJt3goQATYba5X6PFl3JLZdYR9IJWs=
