@@ -5,6 +5,7 @@ unreleased
 ----------
 
 - **Breaking:** The minimal required Python release is 3.6.
+- **Breaking:** rohrpost has now an explicit dependency on Channels >= 3.
 - Make support for Python 3.9 official.
 
 2.0.1

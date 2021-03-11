@@ -18,7 +18,7 @@ setup(
     author_email="tobias.kunze@ax-semantics.com",
     license="MIT",
     python_requires=">=3.6",
-    install_requires=["channels>=2.0"],
+    install_requires=["channels>=3.0"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
