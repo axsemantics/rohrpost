@@ -1,8 +1,8 @@
 Changelog
 =========
 
-unreleased
-----------
+3.0.0 unreleased
+----------------
 
 - **Breaking:** The minimal required Python release is 3.6.
 - **Breaking:** rohrpost has now an explicit dependency on Channels >= 3.

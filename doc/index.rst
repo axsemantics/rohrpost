@@ -57,7 +57,7 @@ From the command line::
 
 Or add this line to your `requirements.txt`::
 
-    rohrpost==2.x
+    rohrpost==3.*
 
 
 Routing
@@ -171,6 +171,12 @@ rohrpost provides a few helper functions for message sending in
   same arguments as ``send_message``.
 
 - ``rohrpost.messages.send_to_group`` sends a message to a specific group.
+
+
+Migrating from rohrpost v2
+--------------------------
+
+Make sure you are using Python 3.6+ and Channels 3+.
 
 
 Migrating from rohrpost v1
