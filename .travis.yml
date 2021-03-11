@@ -31,7 +31,7 @@ jobs:
       install: pip install -r requirements/dev.txt
       script:
         - pylava .
-        - isort -rc -c -df .
+        - isort --check --diff .
         - black --check --verbose --diff rohrpost tests
       after_success: true
 
