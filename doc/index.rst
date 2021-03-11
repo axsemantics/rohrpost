@@ -207,7 +207,7 @@ Migrating from rohrpost v1
 - To add clients to a group, change ``Group(group_name).add(message.reply_channel)``
   to ``consumer.add_to_group(group_name)`` when using
   ``rohrpost.sync_consumer.SyncRohrpostConsumer``.  Otherwise we recommend to
-  check out our consumer's implementation and read about `Groups in Channels 2`._
+  check out our consumer's implementation and read about `Groups in Channels 2`_.
 
 - To send messages to a group you can use the new utility function
   ``rohrpost.messages.send_to_group``.
