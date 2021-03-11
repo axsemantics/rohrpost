@@ -1,6 +1,11 @@
 Changelog
 =========
 
+unreleased
+----------
+
+- Make support for Python 3.9 official.
+
 2.0.1
 -----
 

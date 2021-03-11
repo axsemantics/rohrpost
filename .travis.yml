@@ -1,16 +1,17 @@
 language: python
 dist: bionic
 python:
+  - "3.9"
   - "3.8"
   - "3.7"
   - "3.6"
   - "3.5"
 
 install:
-  - pip install -U pip wheel setuptools
-  - pip install coveralls
-  - pip install -r requirements/dev.txt
-  - pip install -r doc/requirements.txt
+  - python -m pip install -U pip wheel setuptools
+  - python -m pip install coveralls
+  - python -m pip install -r requirements/dev.txt
+  - python -m pip install -r doc/requirements.txt
 script:
   - pytest --cov-report term-missing --cov=rohrpost tests
   - cd doc && make html
