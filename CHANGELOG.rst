@@ -4,6 +4,7 @@ Changelog
 unreleased
 ----------
 
+- **Breaking:** The minimal required Python release is 3.6.
 - Make support for Python 3.9 official.
 
 2.0.1

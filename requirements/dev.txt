@@ -1,6 +1,6 @@
-black==20.8b1; python_version>="3.6"
+black==20.8b1
 channels>=2.0
-isort~=5.7; python_version>="3.6"
+isort~=5.7
 pylava~=0.3.0
 pytest~=6.2
 pytest-cov~=2.11
