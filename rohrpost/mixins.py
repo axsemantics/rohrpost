@@ -1,4 +1,5 @@
 import json
+from typing import Sequence
 
 from django.db.transaction import on_commit as on_transaction_commit
 
@@ -10,22 +11,25 @@ class NotifyBase:
 
     def _get_group_name(self, message_type: str = "") -> str:
         if hasattr(self, "get_group_name"):
-            return self.get_group_name(message_type=message_type)
+            return self.get_group_name(message_type=message_type)  # type: ignore[attr-defined]
         if hasattr(self, "group_name"):
-            return self.group_name.format(pk=self.pk)
+            return self.group_name.format(pk=self.pk)  # type: ignore[attr-defined]
         return "{class_name}-{pk}".format(
-            class_name=self.__class__.__name__.lower(), pk=self.pk
+            class_name=self.__class__.__name__.lower(),
+            pk=self.pk,  # type: ignore[attr-defined]
         )
 
-    def _get_push_data(self, updated_fields=None, message_type: str = None) -> dict:
+    def _get_push_data(
+        self, updated_fields: Sequence[str] = None, message_type: str = None
+    ) -> dict:
         if hasattr(self, "get_push_notification_data"):
-            obj_data = self.get_push_notification_data(
+            obj_data = self.get_push_notification_data(  # type: ignore[attr-defined]
                 updated_fields=updated_fields, message_type=message_type
             )
         elif hasattr(self, "serializer_class"):
-            obj_data = self.serializer_class(self).data
+            obj_data = self.serializer_class(self).data  # type: ignore[attr-defined]
         else:
-            obj_data = {"id": self.pk}
+            obj_data = {"id": self.pk}  # type: ignore[attr-defined]
         return obj_data
 
     def _get_message_type(self, message_type: str) -> str:
@@ -34,7 +38,7 @@ class NotifyBase:
     def _send_notify(
         self,
         message_type: str,
-        updated_fields=None,
+        updated_fields: Sequence[str] = None,
         data: dict = None,
         always_send: bool = True,
     ) -> None:
@@ -70,9 +74,9 @@ class NotifyBase:
 
 
 class NotifyOnCreate(NotifyBase):
-    def save(self, *args, **kwargs):
-        initial_pk = self.pk
-        ret = super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+        initial_pk = self.pk  # type: ignore[attr-defined]
+        ret = super().save(*args, **kwargs)  # type: ignore[misc]
         if not initial_pk:
             self._send_notify("create", updated_fields=kwargs.get("update_fields"))
         return ret
@@ -83,9 +87,9 @@ class NotifyOnUpdate(NotifyBase):
         True  # Toggle if even data not reflecting update_fields should be sent
     )
 
-    def save(self, *args, **kwargs):
-        initial_pk = self.pk
-        ret = super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+        initial_pk = self.pk  # type: ignore[attr-defined]
+        ret = super().save(*args, **kwargs)  # type: ignore[misc]
         if initial_pk:
             self._send_notify(
                 "update",
@@ -96,9 +100,9 @@ class NotifyOnUpdate(NotifyBase):
 
 
 class NotifyOnDelete(NotifyBase):
-    def delete(self, *args, **kwargs):
+    def delete(self, *args, **kwargs):  # type: ignore[no-untyped-def]
         self._send_notify("delete")
-        return super().delete(*args, **kwargs)
+        return super().delete(*args, **kwargs)  # type: ignore[misc]
 
 
 class NotifyOnChange(NotifyOnCreate, NotifyOnUpdate, NotifyOnDelete):

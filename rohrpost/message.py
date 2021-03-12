@@ -1,15 +1,17 @@
 import json
 import random
 from decimal import Decimal
-from typing import Union
+from typing import Any, Dict, Union
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from channels.layers import get_channel_layer
 
+MessageID = Union[int, float, str, bytes]
+
 
 class TolerantJSONEncoder(json.JSONEncoder):
-    def default(self, obj):
+    def default(self, obj: Any) -> Any:
         import uuid
 
         if isinstance(obj, uuid.UUID):
@@ -38,12 +40,12 @@ def _send_message(*, consumer: WebsocketConsumer, content: dict) -> None:
 def build_message(
     *,
     handler: str,
-    message_id=None,
-    error=None,
+    message_id: MessageID = None,
+    error: str = None,
     generate_id: bool = False,
     data: dict = None
 ) -> dict:
-    content = dict()
+    content: Dict[str, Union[MessageID, dict]] = {}
     if message_id:
         content["id"] = message_id
     elif generate_id:
@@ -62,8 +64,8 @@ def send_message(
     *,
     consumer: WebsocketConsumer,
     handler: str,
-    message_id=None,
-    error=None,
+    message_id: MessageID = None,
+    error: str = None,
     data: dict = None
 ) -> None:
     content = build_message(
@@ -76,7 +78,11 @@ def send_message(
 
 
 def send_success(
-    *, consumer: WebsocketConsumer, handler: str, message_id, data: dict = None
+    *,
+    consumer: WebsocketConsumer,
+    handler: str,
+    message_id: MessageID,
+    data: dict = None
 ) -> None:
     """
     This method directly wraps send_message but checks the existence of id and type.
@@ -90,7 +96,12 @@ def send_success(
 
 
 def send_error(
-    *, consumer: WebsocketConsumer, handler: str, message_id, error, data: dict = None
+    *,
+    consumer: WebsocketConsumer,
+    handler: str,
+    message_id: MessageID,
+    error: str,
+    data: dict = None
 ) -> None:
     """
     This method wraps send_message and makes sure that error is a keyword argument.

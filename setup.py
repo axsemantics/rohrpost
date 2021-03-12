@@ -1,9 +1,9 @@
-from setuptools import setup
+from setuptools import setup  # type: ignore[import]
 
 from rohrpost import __version__
 
 
-def read(filepath):
+def read(filepath: str) -> str:
     with open(filepath, "r", encoding="utf-8") as f:
         return f.read()
 

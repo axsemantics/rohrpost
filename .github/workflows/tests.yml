@@ -53,9 +53,10 @@ jobs:
           python -m pip install -r requirements/dev.txt
       - name: Lint code
         run: |
-          pylava .
-          isort --check --diff .
-          black --check --verbose --diff rohrpost tests
+          python -m black --check --verbose --diff rohrpost tests
+          python -m isort --check --diff .
+          python -m mypy --exclude tests .
+          python -m pylava .
 
   docs:
     runs-on: ubuntu-latest

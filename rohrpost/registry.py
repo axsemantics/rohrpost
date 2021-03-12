@@ -1,10 +1,10 @@
-from typing import Callable, Dict, List, Union  # noqa
+from typing import Callable, Dict, List, Union
 
-HANDLERS = dict()  # type: Dict[str, Callable]
+HANDLERS: Dict[str, Callable] = {}
 
 
 def _rohrpost_handler(func: Callable, name: Union[str, List[str]]) -> Callable:
-    def update_registry(key: str, value: Callable):
+    def update_registry(key: str, value: Callable) -> None:
         if key in HANDLERS:
             raise Exception('Handler for "{}" is already defined.'.format(key))
         HANDLERS[key] = value
@@ -22,7 +22,7 @@ def _rohrpost_handler(func: Callable, name: Union[str, List[str]]) -> Callable:
 def rohrpost_handler(
     name: Union[str, List[str]] = ""
 ) -> Callable[[Callable], Callable]:
-    def wrap(f):
+    def wrap(f: Callable) -> Callable:
         return _rohrpost_handler(f, name)
 
     return wrap
