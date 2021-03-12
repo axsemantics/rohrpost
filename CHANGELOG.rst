@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.0a1
+3.0.0a2
 -------
 
 - **Breaking:** The minimal required Python release is 3.6.
