@@ -1,4 +1,4 @@
-rohrpost |travis| |coveralls| |pypi|
+rohrpost |ghactions| |coveralls| |pypi|
 ====================================
 
 `rohrpost` is a simple WebSocket protocol that works well with Django_ using
@@ -61,8 +61,8 @@ Run tests and style checks in this directory::
 .. _Django: https://www.djangoproject.com/
 .. _rohrpost-js: https://github.com/axsemantics/rohrpost-js
 .. _our documentation: https://rohrpost.readthedocs.io
-.. |travis| image:: https://travis-ci.org/axsemantics/rohrpost.svg?branch=main
-    :target: https://travis-ci.org/axsemantics/rohrpost
+.. |ghactions| image:: https://github.com/axsemantics/rohrpost/workflows/Tests/badge.svg
+    :target: https://github.com/axsemantics/rohrpost/actions/workflows/tests.yml
 .. |coveralls| image:: https://coveralls.io/repos/github/axsemantics/rohrpost/badge.svg?branch=main
     :target: https://coveralls.io/github/axsemantics/rohrpost?branch=main
 .. |pypi| image:: https://img.shields.io/pypi/v/rohrpost.svg
