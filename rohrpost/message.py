@@ -1,5 +1,6 @@
 import json
 import random
+from collections.abc import Collection, Mapping
 from decimal import Decimal
 from typing import Any, Dict, Union
 
@@ -18,6 +19,10 @@ class TolerantJSONEncoder(json.JSONEncoder):
             return str(obj)
         if isinstance(obj, Decimal):
             return int(obj) if int(obj) == obj else float(obj)
+        if isinstance(obj, Mapping):
+            return dict(obj)
+        if isinstance(obj, Collection):
+            return list(obj)
         return json.JSONEncoder.default(self, obj)
 
 

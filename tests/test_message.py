@@ -1,6 +1,10 @@
+import decimal
+import uuid
+from collections import UserDict, UserList
+
 import pytest
 
-from rohrpost.message import send_error, send_message, send_success
+from rohrpost.message import TolerantJSONEncoder, send_error, send_message, send_success
 
 
 def test_send_error(consumer):
@@ -198,3 +202,21 @@ def test_send_message_without_anything(consumer):
     with pytest.raises(Exception) as exc:
         send_message(consumer=consumer, message_id=None, handler=None)
     assert "empty message" in str(exc.value)
+
+
+@pytest.mark.parametrize(
+    "item, expected",
+    [
+        (
+            uuid.UUID("3265e5a9-29bf-4fce-af93-7fc04cdb1e7b"),
+            '"3265e5a9-29bf-4fce-af93-7fc04cdb1e7b"',
+        ),
+        (decimal.Decimal(3), "3"),
+        (decimal.Decimal(3.2), "3.2"),
+        (UserDict(), "{}"),
+        (UserList(), "[]"),
+        (frozenset(), "[]"),
+    ],
+)
+def test_tolerant_json_encoder(item, expected):
+    assert TolerantJSONEncoder().encode(item) == expected
