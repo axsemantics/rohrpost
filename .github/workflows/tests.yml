@@ -51,12 +51,19 @@ jobs:
         run: |
           python -m pip install --upgrade pip wheel setuptools
           python -m pip install -r requirements/dev.txt
-      - name: Lint code
+      - name: Check code format
         run: |
           python -m black --check --verbose --diff rohrpost tests
+      - name: Check imports
+        run: |
           python -m isort --check --diff .
+      - name: Check types
+        run: |
           python -m mypy rohrpost
+      - name: Check code style
+        run: |
           python -m pylava .
+      - name: Check syntax of readme (reStructuredText)
           rst-lint README.rst
 
   docs:
