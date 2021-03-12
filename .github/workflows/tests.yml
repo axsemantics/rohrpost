@@ -57,6 +57,7 @@ jobs:
           python -m isort --check --diff .
           python -m mypy rohrpost
           python -m pylava .
+          rst-lint README.rst
 
   docs:
     runs-on: ubuntu-latest

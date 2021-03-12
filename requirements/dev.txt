@@ -5,3 +5,4 @@ mypy>=0.812
 pylava~=0.3.0
 pytest~=6.2
 pytest-cov~=2.11
+restructuredtext_lint~=1.3

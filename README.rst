@@ -1,5 +1,5 @@
 rohrpost |ghactions| |coveralls| |pypi|
-====================================
+=======================================
 
 `rohrpost` is a simple WebSocket protocol that works well with Django_ using
 Channels_. It will interface with every service implementing the ASGI_
