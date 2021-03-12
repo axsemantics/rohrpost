@@ -34,8 +34,10 @@ jobs:
         run: |
           python -m pytest --cov-report term-missing --cov=rohrpost tests
       - name: Publish coverage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "TODO: Run 'coveralls'"
+          coveralls
 
   lint:
     runs-on: ubuntu-latest
