@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools >= 54.1.1", "wheel >= 0.36.2"]
+build-backend = "setuptools.build_meta"
+
 [tool.isort]
 balanced_wrapping = true
 include_trailing_comma = true

@@ -7,3 +7,5 @@ _build/
 *.pyc
 .mypy_cache/
 .pytest_cache/
+build/
+dist/
