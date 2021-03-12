@@ -64,6 +64,7 @@ jobs:
         run: |
           python -m pylava .
       - name: Check syntax of readme (reStructuredText)
+        run: |
           rst-lint README.rst
       - name: Check manifest
         run: |
