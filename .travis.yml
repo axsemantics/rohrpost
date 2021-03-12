@@ -13,7 +13,7 @@ install:
   - python -m pip install -r doc/requirements.txt
 script:
   - pytest --cov-report term-missing --cov=rohrpost tests
-  - cd doc && make html
+  - cd doc && make html && cd ..
 after_success:
   - coveralls
 

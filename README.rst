@@ -61,9 +61,9 @@ Run tests and style checks in this directory::
 .. _Django: https://www.djangoproject.com/
 .. _rohrpost-js: https://github.com/axsemantics/rohrpost-js
 .. _our documentation: https://rohrpost.readthedocs.io
-.. |travis| image:: https://travis-ci.org/axsemantics/rohrpost.svg?branch=master
+.. |travis| image:: https://travis-ci.org/axsemantics/rohrpost.svg?branch=main
     :target: https://travis-ci.org/axsemantics/rohrpost
-.. |coveralls| image:: https://coveralls.io/repos/github/axsemantics/rohrpost/badge.svg?branch=master
-    :target: https://coveralls.io/github/axsemantics/rohrpost?branch=master
+.. |coveralls| image:: https://coveralls.io/repos/github/axsemantics/rohrpost/badge.svg?branch=main
+    :target: https://coveralls.io/github/axsemantics/rohrpost?branch=main
 .. |pypi| image:: https://img.shields.io/pypi/v/rohrpost.svg
     :target: https://pypi.python.org/pypi/rohrpost/
