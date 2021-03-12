@@ -51,7 +51,7 @@ Run tests and style checks in this directory::
 
     py.test
     pylava
-    isort -rc .
+    isort .
     black rohrpost tests
 
 
