@@ -55,7 +55,7 @@ jobs:
         run: |
           python -m black --check --verbose --diff rohrpost tests
           python -m isort --check --diff .
-          python -m mypy --exclude "tests|/setup\.py$" .
+          python -m mypy rohrpost
           python -m pylava .
 
   docs:
