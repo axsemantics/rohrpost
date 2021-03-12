@@ -16,7 +16,7 @@ class TolerantJSONEncoder(json.JSONEncoder):
             return str(obj)
         if isinstance(obj, Decimal):
             return int(obj) if int(obj) == obj else float(obj)
-        return json.JSONDecoder.default(self, obj)
+        return json.JSONEncoder.default(self, obj)
 
 
 def send_to_group(group_name: str, message: Union[str, dict]) -> None:
