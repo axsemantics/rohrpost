@@ -33,7 +33,7 @@ def send_to_group(group_name: str, message: Union[str, dict]) -> None:
     """
     if async_to_sync is None:
         return
-    async_to_sync(get_channel_layer().group_send)(
+    async_to_sync(get_channel_layer().group_send)(  # type: ignore[no-untyped-call]
         group_name, {"type": "rohrpost.message", "message": message}
     )
 

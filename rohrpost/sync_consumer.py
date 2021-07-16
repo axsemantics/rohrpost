@@ -21,7 +21,7 @@ class SyncRohrpostConsumer(WebsocketConsumer):
     def disconnect(self, close_code: Any) -> None:
         for group_name in list(self._subscribed_groups):
             self._subscribed_groups.remove(group_name)
-            async_to_sync(self.channel_layer.group_discard)(
+            async_to_sync(self.channel_layer.group_discard)(  # type: ignore[no-untyped-call]
                 group_name, self.channel_name
             )
         super().disconnect(close_code)
@@ -49,11 +49,15 @@ class SyncRohrpostConsumer(WebsocketConsumer):
         if group_name in self._subscribed_groups:
             return
         self._subscribed_groups.add(group_name)
-        async_to_sync(self.channel_layer.group_add)(group_name, self.channel_name)
+        async_to_sync(self.channel_layer.group_add)(  # type: ignore[no-untyped-call]
+            group_name, self.channel_name
+        )
 
     def remove_from_group(self, group_name: str) -> None:
         try:
             self._subscribed_groups.remove(group_name)
         except KeyError:
             return
-        async_to_sync(self.channel_layer.group_discard)(group_name, self.channel_name)
+        async_to_sync(self.channel_layer.group_discard)(  # type: ignore[no-untyped-call]
+            group_name, self.channel_name
+        )
