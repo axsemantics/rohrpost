@@ -1,3 +1,4 @@
+# pylint: disable=no-member,too-few-public-methods
 import json
 from typing import Sequence
 
@@ -32,7 +33,9 @@ class NotifyBase:
             obj_data = {"id": self.pk}  # type: ignore[attr-defined]
         return obj_data
 
-    def _get_message_type(self, message_type: str) -> str:
+    def _get_message_type(  # pylint: disable=no-self-use
+        self, message_type: str
+    ) -> str:
         return message_type
 
     def _send_notify(
@@ -115,7 +118,8 @@ class NotifyOnChange(NotifyOnCreate, NotifyOnUpdate, NotifyOnDelete):
         - As the result of '{class_name}-{pk}'.format(class_name=object.__class__.__name__.lower()
           pk=object.pk) otherwise
     The serialized object will be taken either from:
-        - The result of get_push_notification_data(updated_fields=None) if such a method exists, else
+        - The result of get_push_notification_data(updated_fields=None),
+          if such a method exists, else
         - The result of serializer_class(self).data, if such an attribute exists, else
         - {"id": self.pk}
     The serialized object will also contain an 'updated_fields' attribute with a list *if*
@@ -134,5 +138,3 @@ class NotifyOnChange(NotifyOnCreate, NotifyOnUpdate, NotifyOnDelete):
         }
     }
     """
-
-    pass

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
 #
 # rohrpost documentation build configuration file, created by
 # sphinx-quickstart on Sun Sep 10 11:38:15 2017.

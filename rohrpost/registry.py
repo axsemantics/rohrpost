@@ -12,8 +12,8 @@ def _rohrpost_handler(func: Callable, name: Union[str, List[str]]) -> Callable:
     name = name or func.__name__
 
     if isinstance(name, list):
-        for n in name:
-            update_registry(n, func)
+        for _name in name:
+            update_registry(_name, func)
     else:
         update_registry(name, func)
     return func
@@ -22,7 +22,7 @@ def _rohrpost_handler(func: Callable, name: Union[str, List[str]]) -> Callable:
 def rohrpost_handler(
     name: Union[str, List[str]] = ""
 ) -> Callable[[Callable], Callable]:
-    def wrap(f: Callable) -> Callable:
-        return _rohrpost_handler(f, name)
+    def wrap(func: Callable) -> Callable:
+        return _rohrpost_handler(func, name)
 
     return wrap

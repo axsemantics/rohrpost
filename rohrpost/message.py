@@ -1,5 +1,6 @@
 import json
 import random
+import uuid
 from collections.abc import Collection, Mapping
 from decimal import Decimal
 from typing import Any, Dict, Union
@@ -12,18 +13,16 @@ MessageID = Union[int, float, str, bytes]
 
 
 class TolerantJSONEncoder(json.JSONEncoder):
-    def default(self, obj: Any) -> Any:
-        import uuid
-
-        if isinstance(obj, uuid.UUID):
-            return str(obj)
-        if isinstance(obj, Decimal):
-            return int(obj) if int(obj) == obj else float(obj)
-        if isinstance(obj, Mapping):
-            return dict(obj)
-        if isinstance(obj, Collection):
-            return list(obj)
-        return json.JSONEncoder.default(self, obj)
+    def default(self, o: Any) -> Any:
+        if isinstance(o, uuid.UUID):
+            return str(o)
+        if isinstance(o, Decimal):
+            return int(o) if int(o) == o else float(o)
+        if isinstance(o, Mapping):
+            return dict(o)
+        if isinstance(o, Collection):
+            return list(o)
+        return json.JSONEncoder.default(self, o)
 
 
 def send_to_group(group_name: str, message: Union[str, dict]) -> None:

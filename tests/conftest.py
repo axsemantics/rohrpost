@@ -1,3 +1,4 @@
+# pylint: disable=too-few-public-methods,too-many-ancestors,unused-argument,useless-super-delegation
 import pytest
 
 from rohrpost.mixins import NotifyOnChange
@@ -10,9 +11,11 @@ def consumer():
 
 
 class MockModel:
+    pk = None
+
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.pk = 1
+            self.pk = 1  # pylint: disable=invalid-name
         return self
 
     def delete(self, *args, **kwargs):
@@ -46,7 +49,7 @@ class ModelWithAttrMixin:
 
 class ModelWithMethodMixin:
     def get_group_name(self, message_type):
-        return "method-example-{self.pk}".format(self=self)
+        return f"method-example-{self.pk}"
 
 
 class ModelWithDataMixin:

@@ -18,15 +18,15 @@ class SyncRohrpostConsumer(WebsocketConsumer):
     def connect(self) -> None:
         self.accept()
 
-    def disconnect(self, close_code: Any) -> None:
+    def disconnect(self, code: Any) -> None:
         for group_name in list(self._subscribed_groups):
             self._subscribed_groups.remove(group_name)
             async_to_sync(self.channel_layer.group_discard)(  # type: ignore[no-untyped-call]
                 group_name, self.channel_name
             )
-        super().disconnect(close_code)
+        super().disconnect(code)
 
-    def receive(self, text_data: str) -> None:
+    def receive(self, text_data: str = None, bytes_data: bytes = None) -> None:
         handle_rohrpost_message(consumer=self, text_data=text_data)
 
     def rohrpost_message(self, event: dict) -> None:
