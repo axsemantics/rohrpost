@@ -60,9 +60,12 @@ jobs:
       - name: Check types
         run: |
           python -m mypy rohrpost
-      - name: Check code style
+      - name: Check code with flake8
         run: |
-          python -m pylava .
+          python -m flake8
+      - name: Check code with pylint
+        run: |
+          python -m pytest --pylint --pylint-rcfile=$(pwd)/pyproject.toml --pylint-jobs=0
       - name: Check manifest
         run: |
           python -m check_manifest

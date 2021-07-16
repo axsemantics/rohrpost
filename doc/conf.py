@@ -47,7 +47,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'rohrpost'
-copyright = '2017, AX semantics'
+copyright = '2017, AX semantics'  # noqa: A001  # pylint: disable=redefined-builtin
 author = 'AX semantics'
 
 # The version info for the project you're documenting, acts as replacement for

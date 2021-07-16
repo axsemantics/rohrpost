@@ -49,10 +49,11 @@ Daphne_, Django_ and so on. ::
 
 Run tests and style checks in this directory::
 
-    py.test
-    pylava
-    isort .
-    black rohrpost tests
+    python -m pytest
+    python -m isort .
+    python -m black rohrpost tests
+    python -m flake8
+    python -m pytest --pylint --pylint-rcfile=$(pwd)/pyproject.toml --pylint-jobs=0
 
 
 .. _ASGI: https://channels.readthedocs.io/en/latest/asgi.html

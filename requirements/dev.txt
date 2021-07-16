@@ -1,10 +1,15 @@
 black>=21.6b0
 channels>=3.0
 check-manifest>=0.46
+flake8~=3.9
+flake8-annotations-complexity>=0.0.6
+flake8-builtins>=1.5.3
+flake8-comprehensions>=3.5.0
 isort~=5.9
 mypy>=0.910
 Pygments~=2.9
-pylava~=0.3.0
+pylint~=2.9
 pytest~=6.2
 pytest-cov~=2.12
+pytest-pylint>=0.18
 types-setuptools>=57.0.0

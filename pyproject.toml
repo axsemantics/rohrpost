@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [tool.check-manifest]
 ignore = [
+    ".flake8",
     "CHANGELOG.rst",
     "check_version.sh",
     "mypy.ini",
-    "pylava.ini",
     "doc/*",
     "requirements/*",
     "tests/*",
@@ -16,3 +16,26 @@ ignore = [
 [tool.isort]
 balanced_wrapping = true
 profile = "black"
+
+
+[tool.pylint."messages control"]
+disable = [
+    "access-member-before-definition",
+    "arguments-differ",
+    "arguments-renamed",
+    "attribute-defined-outside-init",
+    "import-outside-toplevel",
+    "inconsistent-return-statements",
+    "invalid-name",
+    "line-too-long",
+    "missing-docstring",
+    "missing-format-attribute",
+    "no-member",
+    "no-self-use",
+    "too-few-public-methods",
+    "too-many-ancestors",
+    "unnecessary-pass",
+    "unused-argument",
+    "unused-import",
+    "useless-super-delegation",
+]
