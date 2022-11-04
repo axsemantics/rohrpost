@@ -21,7 +21,7 @@ jobs:
         python -m pip install --upgrade "build>=0.3.1" "twine>=3.4.1"
     - name: Build package
       run: |
-        python -m build --sdist --wheel .
+        python -m build .
     - name: Check long description
       run: python -m twine check dist/*
     - name: Publish package on PyPI
