@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.1.0 (unreleased)
-------------------
+3.1.0
+-----
 
 - Make support for Python 3.10 and 3.11 official.
 
