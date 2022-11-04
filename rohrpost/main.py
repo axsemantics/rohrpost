@@ -27,7 +27,7 @@ def handle_rohrpost_message(
     try:
         request = json.loads(text_data)  # type: dict
     except (json.JSONDecodeError, TypeError) as exc:
-        _send_error(error="Could not decode JSON message. Error: {}".format(str(exc)))
+        _send_error(error=f"Could not decode JSON message. Error: {str(exc)}")
         return
 
     if not isinstance(request, dict):
@@ -36,7 +36,7 @@ def handle_rohrpost_message(
 
     for field in REQUIRED_FIELDS:
         if field not in request:
-            _send_error(error="Missing required field '{}'.".format(field))
+            _send_error(error=f"Missing required field '{field}'.")
             return
 
     request_type = request["type"]
@@ -45,7 +45,7 @@ def handle_rohrpost_message(
             consumer=consumer,
             message_id=request["id"],
             handler=request_type,
-            error="Unknown message type '{}'.".format(request_type),
+            error=f"Unknown message type '{request_type}'.",
         )
         return
 

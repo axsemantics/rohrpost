@@ -15,7 +15,7 @@ class NotifyBase:
             return self.get_group_name(message_type=message_type)  # type: ignore[attr-defined]
         if hasattr(self, "group_name"):
             return self.group_name.format(pk=self.pk)  # type: ignore[attr-defined]
-        return "{class_name}-{pk}".format(
+        return "{class_name}-{pk}".format(  # pylint: disable=consider-using-f-string
             class_name=self.__class__.__name__.lower(),
             pk=self.pk,  # type: ignore[attr-defined]
         )
@@ -33,9 +33,7 @@ class NotifyBase:
             obj_data = {"id": self.pk}  # type: ignore[attr-defined]
         return obj_data
 
-    def _get_message_type(  # pylint: disable=no-self-use
-        self, message_type: str
-    ) -> str:
+    def _get_message_type(self, message_type: str) -> str:
         return message_type
 
     def _send_notify(
