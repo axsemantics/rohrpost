@@ -47,7 +47,7 @@ def build_message(
     message_id: Optional[MessageID] = None,
     error: Optional[str] = None,
     generate_id: bool = False,
-    data: Optional[dict] = None
+    data: Optional[dict] = None,
 ) -> dict:
     content: Dict[str, Union[MessageID, dict]] = {}
     if message_id:
@@ -70,7 +70,7 @@ def send_message(
     handler: str,
     message_id: Optional[MessageID] = None,
     error: Optional[str] = None,
-    data: Optional[dict] = None
+    data: Optional[dict] = None,
 ) -> None:
     content = build_message(
         handler=handler, message_id=message_id, error=error, data=data
@@ -86,7 +86,7 @@ def send_success(
     consumer: WebsocketConsumer,
     handler: str,
     message_id: MessageID,
-    data: Optional[dict] = None
+    data: Optional[dict] = None,
 ) -> None:
     """
     This method directly wraps send_message but checks the existence of id and type.
@@ -105,7 +105,7 @@ def send_error(
     handler: str,
     message_id: MessageID,
     error: str,
-    data: Optional[dict] = None
+    data: Optional[dict] = None,
 ) -> None:
     """
     This method wraps send_message and makes sure that error is a keyword argument.
