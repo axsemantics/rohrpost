@@ -5,6 +5,7 @@ unreleased
 ----------
 
 - Drop support for Python 3.6 and 3.7 (both are EOL)
+- Require Channels >= 4
 
 3.1.0
 -----
