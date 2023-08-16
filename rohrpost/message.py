@@ -9,7 +9,7 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from channels.layers import get_channel_layer
 
-MessageID = Union[int, float, str, bytes]
+MessageID = Union[int, float, str, bytes]  # pylint: disable=invalid-name
 
 
 class TolerantJSONEncoder(json.JSONEncoder):
@@ -77,7 +77,7 @@ def send_message(
     )
 
     if not content:
-        raise Exception("Cannot send an empty message.")
+        raise ValueError("Cannot send an empty message.")
     _send_message(consumer=consumer, content=content)
 
 
@@ -92,7 +92,7 @@ def send_success(
     This method directly wraps send_message but checks the existence of id and type.
     """
     if message_id is None or handler is None:
-        raise Exception(
+        raise ValueError(
             "You have to provide a message ID and handler on success messages."
         )
 

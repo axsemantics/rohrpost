@@ -6,7 +6,7 @@ HANDLERS: Dict[str, Callable] = {}
 def _rohrpost_handler(func: Callable, name: Union[str, List[str]]) -> Callable:
     def update_registry(key: str, value: Callable) -> None:
         if key in HANDLERS:
-            raise Exception(f'Handler for "{key}" is already defined.')
+            raise ValueError(f'Handler for "{key}" is already defined.')
         HANDLERS[key] = value
 
     name = name or func.__name__
