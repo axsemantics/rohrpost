@@ -1,2 +1,2 @@
 include LICENSE
-include rohrpost/py.typed
+include src/rohrpost/py.typed

@@ -53,13 +53,13 @@ jobs:
           python -m pip install -r requirements/dev.txt
       - name: Check code format
         run: |
-          python -m black --check --verbose --diff rohrpost tests
+          python -m black --check --verbose --diff src/rohrpost tests
       - name: Check imports
         run: |
           python -m isort --check --diff .
       - name: Check types
         run: |
-          python -m mypy rohrpost
+          python -m mypy src/rohrpost
       - name: Check code with flake8
         run: |
           python -m flake8
