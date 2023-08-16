@@ -12,7 +12,7 @@ class NotifyBase:
 
     def _get_group_name(self, message_type: str = "") -> str:
         if hasattr(self, "get_group_name"):
-            return self.get_group_name(message_type=message_type)  # type: ignore[attr-defined]
+            return self.get_group_name(message_type=message_type)
         if hasattr(self, "group_name"):
             return self.group_name.format(pk=self.pk)  # type: ignore[attr-defined]
         return "{class_name}-{pk}".format(  # pylint: disable=consider-using-f-string
@@ -26,11 +26,11 @@ class NotifyBase:
         message_type: Optional[str] = None,
     ) -> dict:
         if hasattr(self, "get_push_notification_data"):
-            obj_data = self.get_push_notification_data(  # type: ignore[attr-defined]
+            obj_data = self.get_push_notification_data(
                 updated_fields=updated_fields, message_type=message_type
             )
         elif hasattr(self, "serializer_class"):
-            obj_data = self.serializer_class(self).data  # type: ignore[attr-defined]
+            obj_data = self.serializer_class(self).data
         else:
             obj_data = {"id": self.pk}  # type: ignore[attr-defined]
         return obj_data
