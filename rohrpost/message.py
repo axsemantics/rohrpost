@@ -3,7 +3,7 @@ import random
 import uuid
 from collections.abc import Collection, Mapping
 from decimal import Decimal
-from typing import Any, Dict, Union
+from typing import Any, Dict, Optional, Union
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
@@ -44,10 +44,10 @@ def _send_message(*, consumer: WebsocketConsumer, content: dict) -> None:
 def build_message(
     *,
     handler: str,
-    message_id: MessageID = None,
-    error: str = None,
+    message_id: Optional[MessageID] = None,
+    error: Optional[str] = None,
     generate_id: bool = False,
-    data: dict = None
+    data: Optional[dict] = None
 ) -> dict:
     content: Dict[str, Union[MessageID, dict]] = {}
     if message_id:
@@ -68,9 +68,9 @@ def send_message(
     *,
     consumer: WebsocketConsumer,
     handler: str,
-    message_id: MessageID = None,
-    error: str = None,
-    data: dict = None
+    message_id: Optional[MessageID] = None,
+    error: Optional[str] = None,
+    data: Optional[dict] = None
 ) -> None:
     content = build_message(
         handler=handler, message_id=message_id, error=error, data=data
@@ -86,7 +86,7 @@ def send_success(
     consumer: WebsocketConsumer,
     handler: str,
     message_id: MessageID,
-    data: dict = None
+    data: Optional[dict] = None
 ) -> None:
     """
     This method directly wraps send_message but checks the existence of id and type.
@@ -105,7 +105,7 @@ def send_error(
     handler: str,
     message_id: MessageID,
     error: str,
-    data: dict = None
+    data: Optional[dict] = None
 ) -> None:
     """
     This method wraps send_message and makes sure that error is a keyword argument.

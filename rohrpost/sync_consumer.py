@@ -1,5 +1,5 @@
 import json
-from typing import Any, Set, Union
+from typing import Any, Optional, Set, Union
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
@@ -26,7 +26,9 @@ class SyncRohrpostConsumer(WebsocketConsumer):
             )
         super().disconnect(code)
 
-    def receive(self, text_data: str = None, bytes_data: bytes = None) -> None:
+    def receive(
+        self, text_data: Optional[str] = None, bytes_data: Optional[bytes] = None
+    ) -> None:
         handle_rohrpost_message(consumer=self, text_data=text_data)
 
     def rohrpost_message(self, event: dict) -> None:
