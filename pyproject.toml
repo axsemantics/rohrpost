@@ -1,6 +1,52 @@
 [build-system]
-requires = ["setuptools >= 54.1.1", "wheel >= 0.36.2"]
+requires = ["setuptools >= 68.1.0", "wheel >= 0.41.1"]
 build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "rohrpost"
+version = "3.1.0"
+authors = [
+    {name = "Tobias Kunze", email = "tobias.kunze@ax-semantics.com"},
+]
+description = "rohrpost WebSocket protocol for ASGI"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Internet :: WWW/HTTP",
+]
+dependencies = [
+    "channels >= 3.0",
+]
+dynamic = ["readme"]
+
+[project.urls]
+Documentation = "https://rohrpost.readthedocs.io/en/stable/"
+Changelog = "https://github.com/axsemantics/rohrpost/blob/main/CHANGELOG.rst"
+Source = "https://github.com/axsemantics/rohrpost"
+Tracker = "https://github.com/axsemantics/rohrpost/issues"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.rst"], content-type = "text/x-rst"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = true
+
 
 [tool.check-manifest]
 ignore = [
@@ -12,6 +58,7 @@ ignore = [
     "requirements/*",
     "tests/*",
 ]
+
 
 [tool.isort]
 balanced_wrapping = true
