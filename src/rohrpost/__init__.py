@@ -1,11 +1,9 @@
-import pkg_resources  # part of setuptools
+import importlib.metadata
 
 try:
-    dist = pkg_resources.get_distribution("rohrpost")
-except pkg_resources.DistributionNotFound:
+    __version__: str = importlib.metadata.version("rohrpost")
+except importlib.metadata.PackageNotFoundError:
     # This happens when the package isn't installed
-    __version__: str = "0.0.0"
-else:
-    __version__ = dist.version
+    __version__ = "0.0.0"
 
 VERSION: str = __version__
