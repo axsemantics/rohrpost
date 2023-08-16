@@ -1,6 +1,11 @@
 Changelog
 =========
 
+unreleased
+----------
+
+- Drop support for Python 3.6 and 3.7 (both are EOL)
+
 3.1.0
 -----
 
