@@ -1,6 +1,11 @@
 Changelog
 =========
 
+unreleased
+----------
+
+- Make support for Python 3.12 official.
+
 4.0.0
 -----
 
