@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rohrpost"
-version = "4.0.0"
+version = "4.1.0"
 authors = [
     {name = "Tobias Kunze", email = "tobias.kunze@ax-semantics.com"},
 ]
