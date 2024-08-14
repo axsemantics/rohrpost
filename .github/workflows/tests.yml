@@ -97,7 +97,7 @@ jobs:
           python-version: 3.9
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip "build>=0.10.0" "twine>=4.0.2"
+          python -m pip install --upgrade pip "build>=1.2.1" "twine>=5.1.1"
       - name: Build package
         run: python -m build .
       - name: Check long description
