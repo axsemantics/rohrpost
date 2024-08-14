@@ -103,7 +103,7 @@ def send_error(
     *,
     consumer: WebsocketConsumer,
     handler: str,
-    message_id: MessageID,
+    message_id: Optional[MessageID],
     error: str,
     data: Optional[dict] = None,
 ) -> None:

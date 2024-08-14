@@ -19,7 +19,7 @@ def handle_rohrpost_message(
     A valid JSON object including at least an "id" and "type" field.
     It then hands off further handling to the registered handler (if any).
     """
-    _send_error = partial(send_error, consumer=consumer, message_id=None, handler=None)
+    _send_error = partial(send_error, consumer=consumer, message_id=None, handler="")
     if not text_data:
         _send_error(error="Received empty message.")
         return
