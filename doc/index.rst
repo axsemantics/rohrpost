@@ -53,7 +53,7 @@ Installation
 
 From the command line::
 
-    pip install rohrpost
+    python -m pip install rohrpost
 
 Or add this line to your `requirements.txt`::
 

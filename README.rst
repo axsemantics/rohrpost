@@ -32,7 +32,7 @@ Installation
 
 From the command line::
 
-    pip install rohrpost
+    python -m pip install rohrpost
 
 Or add this line to your `requirements.txt`::
 
@@ -45,7 +45,7 @@ For development you'll need to have the test environment installed. This is
 rather large since `rohrpost` works mainly in conjunction with Channels_,
 Daphne_, Django_ and so on. ::
 
-    pip install -r requirements/dev.txt
+    python -m pip install -r requirements/dev.txt
 
 Run tests and style checks in this directory::
 
