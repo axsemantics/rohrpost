@@ -67,7 +67,7 @@ jobs:
           python -m flake8
       - name: Check code with pylint
         run: |
-          python -m pytest --pylint --pylint-rcfile=$(pwd)/pyproject.toml --pylint-jobs=0
+          python -m pylint  --recursive=y --reports=y --verbose ./
       - name: Check manifest
         run: |
           python -m check_manifest

@@ -53,7 +53,7 @@ Run tests and style checks in this directory::
     python -m isort .
     python -m black rohrpost tests
     python -m flake8
-    python -m pytest --pylint --pylint-rcfile=$(pwd)/pyproject.toml --pylint-jobs=0
+    python -m pylint  --recursive=y --reports=y --verbose ./
 
 
 .. _ASGI: https://channels.readthedocs.io/en/latest/asgi.html

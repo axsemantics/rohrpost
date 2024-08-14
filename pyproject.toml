@@ -69,6 +69,7 @@ profile = "black"
 
 [tool.pylint."messages control"]
 disable = [
+    "duplicate-code",
     "missing-docstring",
 ]
 
