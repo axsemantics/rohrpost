@@ -52,7 +52,6 @@ namespaces = true
 ignore = [
     ".flake8",
     "CHANGELOG.rst",
-    "check_version.sh",
     "mypy.ini",
     "doc/*",
     "requirements/*",
