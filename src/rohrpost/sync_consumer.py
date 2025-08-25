@@ -1,5 +1,5 @@
 import json
-from typing import Any, Optional, Set, Union
+from typing import Any
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
@@ -13,7 +13,7 @@ class SyncRohrpostConsumer(WebsocketConsumer):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self._subscribed_groups: Set[str] = set()
+        self._subscribed_groups: set[str] = set()
 
     def connect(self) -> None:
         self.accept()
@@ -27,7 +27,7 @@ class SyncRohrpostConsumer(WebsocketConsumer):
         super().disconnect(code)
 
     def receive(
-        self, text_data: Optional[str] = None, bytes_data: Optional[bytes] = None
+        self, text_data: str | None = None, bytes_data: bytes | None = None
     ) -> None:
         handle_rohrpost_message(consumer=self, text_data=text_data)
 
@@ -42,7 +42,7 @@ class SyncRohrpostConsumer(WebsocketConsumer):
         https://channels.readthedocs.io/en/latest/topics/channel_layers.html#what-to-send-over-the-channel-layer
         """
         # Send a message down to the client
-        message: Union[str, dict] = event["message"]
+        message: str | dict = event["message"]
         if not isinstance(message, str):
             message = json.dumps(message, cls=self.json_encoder)
         self.send(text_data=message)

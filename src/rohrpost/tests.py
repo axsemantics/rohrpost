@@ -1,10 +1,10 @@
 import json
-from typing import Any, List
+from typing import Any
 
 
 class Consumer:
     def __init__(self) -> None:
-        self.data: List[Any] = []
+        self.data: list[Any] = []
         self.closed = False
 
     def send(self, message: str) -> None:

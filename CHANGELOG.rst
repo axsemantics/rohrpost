@@ -1,6 +1,11 @@
 Changelog
 =========
 
+5.0.0 (unreleased)
+------------------
+
+- **Breaking:** The minimal required Python release is 3.10.
+
 4.1.0
 -----
 

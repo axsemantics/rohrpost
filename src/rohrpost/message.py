@@ -3,13 +3,13 @@ import random
 import uuid
 from collections.abc import Collection, Mapping
 from decimal import Decimal
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from channels.layers import get_channel_layer
 
-MessageID = Union[int, float, str, bytes]  # pylint: disable=invalid-name
+MessageID = int | float | str | bytes  # pylint: disable=invalid-name
 
 
 class TolerantJSONEncoder(json.JSONEncoder):
@@ -25,7 +25,7 @@ class TolerantJSONEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, o)
 
 
-def send_to_group(group_name: str, message: Union[str, dict]) -> None:
+def send_to_group(group_name: str, message: str | dict) -> None:
     """Send a message to a group.
 
     This requires the group to be exist on the default channel layer.
@@ -44,12 +44,12 @@ def _send_message(*, consumer: WebsocketConsumer, content: dict) -> None:
 def build_message(
     *,
     handler: str,
-    message_id: Optional[MessageID] = None,
-    error: Optional[str] = None,
+    message_id: MessageID | None = None,
+    error: str | None = None,
     generate_id: bool = False,
-    data: Optional[dict] = None,
+    data: dict | None = None,
 ) -> dict:
-    content: Dict[str, Union[MessageID, dict]] = {}
+    content: dict[str, MessageID | dict] = {}
     if message_id:
         content["id"] = message_id
     elif generate_id:
@@ -68,9 +68,9 @@ def send_message(
     *,
     consumer: WebsocketConsumer,
     handler: str,
-    message_id: Optional[MessageID] = None,
-    error: Optional[str] = None,
-    data: Optional[dict] = None,
+    message_id: MessageID | None = None,
+    error: str | None = None,
+    data: dict | None = None,
 ) -> None:
     content = build_message(
         handler=handler, message_id=message_id, error=error, data=data
@@ -86,7 +86,7 @@ def send_success(
     consumer: WebsocketConsumer,
     handler: str,
     message_id: MessageID,
-    data: Optional[dict] = None,
+    data: dict | None = None,
 ) -> None:
     """
     This method directly wraps send_message but checks the existence of id and type.
@@ -103,9 +103,9 @@ def send_error(
     *,
     consumer: WebsocketConsumer,
     handler: str,
-    message_id: Optional[MessageID],
+    message_id: MessageID | None,
     error: str,
-    data: Optional[dict] = None,
+    data: dict | None = None,
 ) -> None:
     """
     This method wraps send_message and makes sure that error is a keyword argument.

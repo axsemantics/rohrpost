@@ -1,6 +1,5 @@
 import json
 from functools import partial
-from typing import Optional
 
 from channels.generic.websocket import WebsocketConsumer
 
@@ -11,9 +10,7 @@ from .registry import HANDLERS
 REQUIRED_FIELDS = ["type", "id"]
 
 
-def handle_rohrpost_message(
-    consumer: WebsocketConsumer, text_data: Optional[str]
-) -> None:
+def handle_rohrpost_message(consumer: WebsocketConsumer, text_data: str | None) -> None:
     """
     Handling of a rohrpost message will validate the required format:
     A valid JSON object including at least an "id" and "type" field.

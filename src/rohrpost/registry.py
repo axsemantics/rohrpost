@@ -1,9 +1,9 @@
-from typing import Callable, Dict, List, Union
+from collections.abc import Callable
 
-HANDLERS: Dict[str, Callable] = {}
+HANDLERS: dict[str, Callable] = {}
 
 
-def _rohrpost_handler(func: Callable, name: Union[str, List[str]]) -> Callable:
+def _rohrpost_handler(func: Callable, name: str | list[str]) -> Callable:
     def update_registry(key: str, value: Callable) -> None:
         if key in HANDLERS:
             raise ValueError(f'Handler for "{key}" is already defined.')
@@ -19,9 +19,7 @@ def _rohrpost_handler(func: Callable, name: Union[str, List[str]]) -> Callable:
     return func
 
 
-def rohrpost_handler(
-    name: Union[str, List[str]] = ""
-) -> Callable[[Callable], Callable]:
+def rohrpost_handler(name: str | list[str] = "") -> Callable[[Callable], Callable]:
     def wrap(func: Callable) -> Callable:
         return _rohrpost_handler(func, name)
 

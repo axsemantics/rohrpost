@@ -1,6 +1,6 @@
 # pylint: disable=no-member,too-few-public-methods
 import json
-from typing import Optional, Sequence
+from collections.abc import Sequence
 
 from django.db.transaction import on_commit as on_transaction_commit
 
@@ -22,8 +22,8 @@ class NotifyBase:
 
     def _get_push_data(
         self,
-        updated_fields: Optional[Sequence[str]] = None,
-        message_type: Optional[str] = None,
+        updated_fields: Sequence[str] | None = None,
+        message_type: str | None = None,
     ) -> dict:
         if hasattr(self, "get_push_notification_data"):
             obj_data = self.get_push_notification_data(
@@ -41,8 +41,8 @@ class NotifyBase:
     def _send_notify(
         self,
         message_type: str,
-        updated_fields: Optional[Sequence[str]] = None,
-        data: Optional[dict] = None,
+        updated_fields: Sequence[str] | None = None,
+        data: dict | None = None,
         always_send: bool = True,
     ) -> None:
         group_name = self._get_group_name(message_type=message_type)
