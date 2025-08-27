@@ -3,7 +3,7 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD   = python -msphinx
+SPHINXBUILD   = uv run --only-group doc sphinx-build
 SPHINXPROJ    = rohrpost
 SOURCEDIR     = .
 BUILDDIR      = _build
