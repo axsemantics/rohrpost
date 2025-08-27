@@ -45,6 +45,7 @@ dev = [
     "black>=25.1.0",
     "channels>=4.3.1",
     "check-manifest>=0.50",
+    "coveralls>=4.0.1",
     "flake8>=7.3.0",
     "flake8-annotations-complexity>=0.1.0",
     "flake8-builtins>=3.0.0",
